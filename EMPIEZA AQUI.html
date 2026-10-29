@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>El Pack de Reels Definitivo · Empieza aquí</title>
+<style>
+  :root { --fondo: #0e1116; --panel: #161b23; --borde: #262d38; --tinta: #f5f3ee; --suave: #a9b0bb; --acento: #ffd23f; --azul: #3fd0ff; --rojo: #ff5a5f; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--fondo); color: var(--tinta); font: 17px/1.6 "Segoe UI", system-ui, -apple-system, sans-serif; }
+  main { max-width: 860px; margin: 0 auto; padding: 48px 20px 80px; }
+  header { text-align: center; padding: 24px 0 36px; }
+  .sello { display: inline-block; font-weight: 800; font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--fondo); background: var(--acento); padding: 6px 12px; border-radius: 6px; }
+  h1 { font-size: clamp(34px, 7vw, 58px); line-height: 1.05; margin: 18px 0 12px; letter-spacing: -.02em; }
+  h1 b { color: var(--acento); }
+  .sub { color: var(--suave); font-size: 19px; max-width: 620px; margin: 0 auto; }
+  h2 { font-size: 26px; margin: 56px 0 16px; display: flex; gap: 12px; align-items: baseline; }
+  h2 .n { color: var(--acento); font-variant-numeric: tabular-nums; }
+  h3 { font-size: 18px; margin: 22px 0 6px; }
+  p, li { color: #dfe2e6; }
+  a { color: var(--azul); }
+  code, kbd { font-family: Consolas, "SF Mono", monospace; font-size: .92em; background: #1f2630; border: 1px solid var(--borde); border-radius: 6px; padding: 1px 6px; color: var(--tinta); }
+  .caja { background: var(--panel); border: 1px solid var(--borde); border-radius: 14px; padding: 20px 22px; margin: 16px 0; }
+  .caja.ojo { border-color: #5a4a12; background: #1d1a10; }
+  .caja.ojo b { color: var(--acento); }
+  .pasos { counter-reset: p; list-style: none; padding: 0; margin: 0; }
+  .pasos > li { counter-increment: p; position: relative; padding: 18px 20px 18px 74px; background: var(--panel); border: 1px solid var(--borde); border-radius: 14px; margin: 12px 0; }
+  .pasos > li::before { content: counter(p); position: absolute; left: 20px; top: 16px; width: 38px; height: 38px; border-radius: 50%; background: var(--acento); color: var(--fondo); font-weight: 900; display: grid; place-items: center; font-size: 19px; }
+  .pasos > li b:first-child { display: block; font-size: 18px; margin-bottom: 2px; color: var(--tinta); }
+  .dice { display: inline-block; background: #22303d; color: var(--tinta); border-radius: 10px; padding: 4px 12px; font-weight: 600; }
+  .ejemplos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 18px 0; }
+  .ejemplos a { text-decoration: none; color: var(--tinta); }
+  .ejemplos img { width: 100%; aspect-ratio: 9/16; object-fit: cover; border-radius: 12px; border: 1px solid var(--borde); display: block; }
+  .ejemplos span { display: block; font-size: 14px; margin-top: 6px; color: var(--suave); }
+  .ejemplos span b { color: var(--tinta); }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 15.5px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--borde); vertical-align: top; }
+  th { color: var(--suave); font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: .08em; }
+  footer { margin-top: 64px; color: var(--suave); font-size: 14px; text-align: center; }
+  @media (max-width: 640px) { .ejemplos { grid-template-columns: repeat(3, 1fr); gap: 8px; } .pasos > li { padding-left: 64px; } }
+  @media print {
+    :root { --fondo: #fff; --panel: #f6f6f4; --borde: #ddd; --tinta: #111; --suave: #555; --azul: #0a6fa8; }
+    body { font-size: 12.5pt; }
+    p, li { color: #222; }
+    main { padding: 0; }
+    .caja.ojo { background: #fff8db; border-color: #e8d48a; }
+    .caja.ojo b { color: #8a6a00; }
+    .sello { color: #111; }
+    .pasos > li::before { color: #111; }
+    .dice { background: #e9eef3; }
+    code, kbd { background: #f0f0ee; }
+    h2 { break-after: avoid; }
+    .pasos > li, .caja, tr { break-inside: avoid; }
+    .ejemplos img { border-color: #ccc; }
+    @page { size: A4; margin: 16mm 15mm; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <span class="sello">Empieza aquí</span>
+    <h1>El Pack de <b>Reels Definitivo</b></h1>
+    <p class="sub">Escribes una idea y tu IA te hace el reel: guion, voz, animación, subtítulos y sonido. En tu ordenador, listo para subir.</p>
+  </header>
+
+  <div class="ejemplos">
+    <a href="estanteria/andes/ejemplo.mp4"><img src="estanteria/andes/portada.jpg" alt="Ejemplo: el avión de los Andes" /><span><b>Historia</b> · los Andes</span></a>
+    <a href="estanteria/bombas/ejemplo.mp4"><img src="estanteria/bombas/portada.jpg" alt="Ejemplo: la bomba más grande en Madrid" /><span><b>Escala</b> · las bombas</span></a>
+    <a href="estanteria/humanidad/ejemplo.mp4"><img src="estanteria/humanidad/portada.jpg" alt="Ejemplo: 10 personas y la humanidad" /><span><b>¿Y si…?</b> · la humanidad</span></a>
+  </div>
+  <p style="text-align:center;color:var(--suave);font-size:15px">Estos tres vídeos están hechos con el pack. Están en la carpeta <code>estanteria/</code>: ábrelos desde ahí para verlos.</p>
+
+  <h2><span class="n">01</span> Qué necesitas</h2>
+  <table>
+    <tr><th>Qué</th><th>Detalle</th></tr>
+    <tr><td><b>Un ordenador</b></td><td>Windows 10/11 o Mac (también Linux). Unos 5 GB libres. No hace falta tarjeta gráfica.</td></tr>
+    <tr><td><b>Una IA que trabaje en tu ordenador</b></td><td>Recomendado: <b>Claude</b> (la app de escritorio, pestaña <b>Code</b>, o Claude Code en la terminal). También funciona con Codex o Gemini CLI. Necesitas una suscripción que incluya ese modo.</td></tr>
+    <tr><td><b>Cuenta de ElevenLabs</b> (recomendada)</td><td>Para que la voz suene humana. Sin ella, el pack usa una voz gratis que se instala en tu ordenador (más robótica). Si vas a monetizar los vídeos, usa un plan de ElevenLabs que permita uso comercial.</td></tr>
+  </table>
+  <p>No hace falta saber programar ni instalar nada a mano: Node, ffmpeg, Python y el motor de vídeo los instala tu IA.</p>
+
+  <h2><span class="n">02</span> Instalación (10–20 minutos, una sola vez)</h2>
+  <ol class="pasos">
+    <li><b>Descomprime el pack</b>Saca la carpeta del .zip y déjala donde quieras (el Escritorio va bien). Mejor fuera de OneDrive o iCloud: los vídeos pesan.</li>
+    <li><b>Ábrela con tu IA</b>En la app de Claude: pestaña <b>Code</b> → elige como carpeta de trabajo la carpeta del pack (la que tiene dentro <code>EMPIEZA AQUI.html</code>, no una de dentro). Con Claude Code en la terminal: entra en esa carpeta y escribe <code>claude</code>.</li>
+    <li><b>Escribe <span class="dice">Configuración</span></b>Tu IA revisa el ordenador e instala lo que falte. Si te pregunta si puede ejecutar comandos, dile que sí. Si el sistema te pide tu contraseña o un permiso (al instalar Node o ffmpeg, por ejemplo), acéptalo: es lo único que tienes que hacer tú.</li>
+    <li><b>Pega tu clave de ElevenLabs</b>Se te abren dos pestañas en el navegador: la de <b>API Keys</b> de ElevenLabs y una página del pack que pone «Tu clave de ElevenLabs». En ElevenLabs (entra con tu cuenta o créala gratis): <b>Create API Key</b>, con permiso de <b>Text to Speech</b>, <b>Sound Effects</b> y <b>Voices (read)</b>. Copia la clave (empieza por <code>sk_</code>) y pégala en la página del pack, que te dice si es buena. <b>Nunca la pegues en el chat.</b> ¿Sin cuenta? Escribe «sin clave» en el chat y seguirá con la voz gratis.</li>
+    <li><b>Responde una pregunta</b>En qué idioma y para quién son tus vídeos, cómo quieres cerrarlos («Guárdalo», «Sígueme», «Envíaselo a ese amigo que…») y si quieres un aspecto fijo. Se guarda en <code>trabajo/preferencias.md</code> y vale para todos tus vídeos. Puedes cambiarlo cuando quieras.</li>
+  </ol>
+  <div class="caja">Cuando termine te dirá que ya puedes pedir un vídeo. A partir de ahí, <b>un vídeo por conversación</b>: abre una conversación nueva en la misma carpeta para cada uno.</div>
+
+  <h2><span class="n">03</span> Tu primer vídeo</h2>
+  <p>Abre una conversación nueva en la carpeta y pide, por ejemplo:</p>
+  <p><span class="dice">Hazme un vídeo sobre por qué el cielo es azul</span></p>
+  <h3>Lo que pasa después</h3>
+  <ol>
+    <li><b>Guion.</b> Elige la forma de uno de los vídeos de la estantería (o del reel que le pases), busca los datos y te enseña el guion con su hook. <b>Primera parada:</b> cambia lo que quieras o di «adelante».</li>
+    <li><b>Voz y primeras escenas.</b> Graba la voz y anima el hook al ritmo de cada palabra. <b>Segunda parada:</b> te enseña ese trozo para que lo apruebes antes de hacer el resto.</li>
+    <li><b>El resto, seguido.</b> Escenas, subtítulos y sonido. Se mira los fotogramas a sí misma y arregla lo que se vea mal antes de enseñártelo.</li>
+    <li><b>Entrega.</b> El vídeo queda en <code>trabajo/salida/</code>, en una carpeta con su nombre, con su portada y el texto del post (<code>caption.txt</code>). <b>Nunca publica nada por ti:</b> lo subes tú.</li>
+  </ol>
+  <p>Un vídeo tarda entre 20 y 60 minutos según el tema y tu ordenador. Puedes irte mientras trabaja.</p>
+
+  <h3>Frases que funcionan</h3>
+  <table>
+    <tr><th>Escribe</th><th>Para</th></tr>
+    <tr><td><span class="dice">Dame 5 ideas de vídeos sobre astronomía</span></td><td>Que te proponga temas con su hook.</td></tr>
+    <tr><td><span class="dice">Hazme un vídeo como este: (enlace o archivo de un reel)</span></td><td>Copia la <b>forma</b> de un reel que te guste (ritmo, planos, cierre), con contenido tuyo.</td></tr>
+    <tr><td><span class="dice">Hazme 3 versiones con hooks distintos</span></td><td>Probar qué hook funciona mejor.</td></tr>
+    <tr><td><span class="dice">Cambia el cierre / el estilo para siempre</span></td><td>Lo apunta en tus preferencias.</td></tr>
+    <tr><td><span class="dice">En el vídeo del cielo, haz la escena 2 más lenta</span></td><td>Cambiar un vídeo ya hecho.</td></tr>
+    <tr><td><span class="dice">Doctor</span></td><td>Que revise el equipo y arregle lo que falle.</td></tr>
+  </table>
+
+  <h2><span class="n">04</span> Qué hay en la carpeta</h2>
+  <table>
+    <tr><td><code>trabajo/</code></td><td><b>Lo tuyo.</b> <code>salida/</code> tiene los vídeos terminados; <code>proyectos/</code>, cada vídeo con su guion, voz y escenas; <code>preferencias.md</code>, lo que vale para todos tus vídeos.</td></tr>
+    <tr><td><code>estanteria/</code></td><td>Nueve reels que funcionaron, descritos plano a plano: tres del creador del pack (@porquemepasatodo) y seis de otras cuentas, solo como referencia de forma. Cada vídeo nuevo copia la forma de uno.</td></tr>
+    <tr><td><code>herramientas/</code>, <code>plantilla/</code>, <code>sonidos/</code></td><td>Los pasos fijos, el aspecto de las escenas y los efectos de sonido. No hace falta tocarlos.</td></tr>
+    <tr><td><code>AGENTS.md</code>, <code>.claude/</code></td><td>Las instrucciones que lee tu IA.</td></tr>
+    <tr><td><code>.env.local</code></td><td>Tu clave (aparece tras la configuración). Es privada: no la compartas ni la mandes con la carpeta.</td></tr>
+  </table>
+
+  <h2><span class="n">05</span> Si algo falla</h2>
+  <table>
+    <tr><th>Pasa</th><th>Haz</th></tr>
+    <tr><td>Se para al instalar algo</td><td>Mira si el sistema te está pidiendo contraseña o permiso en otra ventana. Luego escribe «sigue».</td></tr>
+    <tr><td>No se abrió la página de la clave, o se cerró</td><td>Escribe «abre la página de la clave». Se cierra sola a los 10 minutos si no pegas nada.</td></tr>
+    <tr><td>La voz suena robótica</td><td>Está usando la voz gratis: escribe «quiero poner mi clave de ElevenLabs».</td></tr>
+    <tr><td>«Quota exceeded» o la voz deja de funcionar</td><td>Se han acabado los créditos del mes en ElevenLabs. Sube de plan o usa la voz gratis hasta que se renueven.</td></tr>
+    <tr><td>ElevenLabs dice que la voz no está en tu plan</td><td>Escribe «usa otra voz de ElevenLabs» o «usa la voz gratis».</td></tr>
+    <tr><td>Cualquier otro error</td><td>Escribe «doctor». Si sigue, abre una conversación nueva y escribe «Configuración» otra vez: no borra nada.</td></tr>
+    <tr><td>Pegué la clave en el chat</td><td>Bórrala en ElevenLabs (API Keys) y crea otra; pégala en la página del pack.</td></tr>
+  </table>
+
+  <div class="caja"><b>¿Cualquier duda?</b> Escríbeme por Instagram a <a href="https://www.instagram.com/porquemepasatodo/">@porquemepasatodo</a>.</div>
+
+  <div class="caja ojo"><b>Antes de publicar:</b> mira el vídeo entero y comprueba los datos. Tu IA busca fuentes y las deja en <code>notas.md</code> de cada proyecto, pero quien publica eres tú.</div>
+
+  <h2><span class="n">06</span> Licencia</h2>
+  <p>Los vídeos que hagas son tuyos: puedes publicarlos, monetizarlos y hacerlos para clientes. El pack es para tu uso; no se puede revender ni compartir. Los reels de otras cuentas de la estantería son solo para estudiar su forma: no los republiques. Detalles en <code>LICENCIA.txt</code> y <code>TERCEROS.md</code>.</p>
+
+  <footer>El Pack de Reels Definitivo · v2 · dudas por Instagram: @porquemepasatodo</footer>
+</main>
+</body>
+</html>

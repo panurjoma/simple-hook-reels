@@ -1,0 +1,145 @@
+{
+  "archivo": "referencia/reel.mp4",
+  "duracion": 63.317,
+  "ancho": 720,
+  "alto": 1280,
+  "fps": "30/1",
+  "cortes": [
+    59.167,
+    59.233
+  ],
+  "cortes_por_minuto": 1.895,
+  "palabras": 205,
+  "palabras_por_segundo": 3.246,
+  "paleta": [
+    {
+      "color": "#180838",
+      "parte": 0.343
+    },
+    {
+      "color": "#381858",
+      "parte": 0.031
+    },
+    {
+      "color": "#f8f8f8",
+      "parte": 0.025
+    },
+    {
+      "color": "#c83858",
+      "parte": 0.013
+    },
+    {
+      "color": "#383888",
+      "parte": 0.002
+    },
+    {
+      "color": "#f8d898",
+      "parte": 0.001
+    },
+    {
+      "color": "#080808",
+      "parte": 0.001
+    },
+    {
+      "color": "#885838",
+      "parte": 0.001
+    }
+  ],
+  "acentos": [
+    {
+      "color": "#381868",
+      "parte": 0.02
+    },
+    {
+      "color": "#c83858",
+      "parte": 0.013
+    },
+    {
+      "color": "#384898",
+      "parte": 0.002
+    },
+    {
+      "color": "#885838",
+      "parte": 0.001
+    },
+    {
+      "color": "#6888f8",
+      "parte": 0.001
+    }
+  ],
+  "frases": [
+    {
+      "inicio": 0,
+      "fin": 5.36,
+      "texto": "Esta viróloga se inyectó en su propio tumor virus que había cultivado ella misma en su laboratorio.",
+      "palabras": 17
+    },
+    {
+      "inicio": 5.36,
+      "fin": 11.76,
+      "texto": "Se llama Beata Halasi, viróloga en Zagreb, y en 2020 el cáncer de mama le volvió por segunda vez.",
+      "palabras": 19
+    },
+    {
+      "inicio": 11.76,
+      "fin": 17.52,
+      "texto": "Lo curioso es que las células de ese cáncer están llenas de puertas que usa el sarampión para colarse.",
+      "palabras": 19
+    },
+    {
+      "inicio": 17.52,
+      "fin": 23.36,
+      "texto": "Y adentro se copia hasta que la célula revienta como una palomita, y las copias saltan a la siguiente.",
+      "palabras": 19
+    },
+    {
+      "inicio": 23.36,
+      "fin": 28.88,
+      "texto": "Y encima cada explosión hace saltar la alarma, y las defensas por fin van a por el tumor.",
+      "palabras": 18
+    },
+    {
+      "inicio": 28.88,
+      "fin": 38.96,
+      "texto": "Así que, con sus médicos vigilando, se inyectó sarampión cada tres o cuatro días durante tres semanas, y luego cambió a otro virus, para que su cuerpo no aprendiera a frenar el primero.",
+      "palabras": 33
+    },
+    {
+      "inicio": 38.96,
+      "fin": 46.08,
+      "texto": "En dos meses, el tumor se quedó en poco más de un tercio, y se despegó del músculo, así que se lo quitaron con una operación sencilla.",
+      "palabras": 27
+    },
+    {
+      "inicio": 46.08,
+      "fin": 48.96,
+      "texto": "Antes, el cáncer le volvía en menos de dos años.",
+      "palabras": 10
+    },
+    {
+      "inicio": 48.96,
+      "fin": 52.96,
+      "texto": "Esta vez, casi cuatro años después, seguía sin rastro de él.",
+      "palabras": 11
+    },
+    {
+      "inicio": 52.96,
+      "fin": 56.8,
+      "texto": "Eso sí, luego hizo un año de tratamiento convencional, y ella avisa.",
+      "palabras": 12
+    },
+    {
+      "inicio": 56.96,
+      "fin": 59.04,
+      "texto": "Esto no debe ser lo primero que pruebes.",
+      "palabras": 8
+    },
+    {
+      "inicio": 59.15,
+      "fin": 63.15,
+      "texto": "Envíáselo a ese amigo que cree que todos los virus son malos.",
+      "palabras": 12
+    }
+  ],
+  "sonido": []
+}

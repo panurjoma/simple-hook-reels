@@ -1,0 +1,234 @@
+{
+  "archivo": "referencia/reel.mp4",
+  "duracion": 108.565,
+  "ancho": 1080,
+  "alto": 1920,
+  "fps": "60/1",
+  "cortes": [],
+  "cortes_por_minuto": 0,
+  "palabras": 311,
+  "palabras_por_segundo": 2.883,
+  "paleta": [
+    {
+      "color": "#281828",
+      "parte": 0.114
+    },
+    {
+      "color": "#684838",
+      "parte": 0.032
+    },
+    {
+      "color": "#c87858",
+      "parte": 0.026
+    },
+    {
+      "color": "#886848",
+      "parte": 0.023
+    },
+    {
+      "color": "#f8d898",
+      "parte": 0.01
+    },
+    {
+      "color": "#383848",
+      "parte": 0.01
+    },
+    {
+      "color": "#c8a858",
+      "parte": 0.008
+    },
+    {
+      "color": "#585868",
+      "parte": 0.006
+    }
+  ],
+  "acentos": [
+    {
+      "color": "#684838",
+      "parte": 0.032
+    },
+    {
+      "color": "#c87858",
+      "parte": 0.026
+    },
+    {
+      "color": "#f8d888",
+      "parte": 0.006
+    },
+    {
+      "color": "#383868",
+      "parte": 0.004
+    },
+    {
+      "color": "#488848",
+      "parte": 0.001
+    }
+  ],
+  "frases": [
+    {
+      "inicio": 0.08,
+      "fin": 1.36,
+      "texto": "10 personas.",
+      "palabras": 2
+    },
+    {
+      "inicio": 1.36,
+      "fin": 3.28,
+      "texto": "Es todo lo que queda de la humanidad.",
+      "palabras": 8
+    },
+    {
+      "inicio": 3.28,
+      "fin": 6,
+      "texto": "¿Podrían volver a llenar la tierra a ellos solos?",
+      "palabras": 9
+    },
+    {
+      "inicio": 6,
+      "fin": 7.6,
+      "texto": "Tener hijos es lo fácil.",
+      "palabras": 5
+    },
+    {
+      "inicio": 7.6,
+      "fin": 11.52,
+      "texto": "Si cada pareja tiene seis, en 25 años ya son 40.",
+      "palabras": 11
+    },
+    {
+      "inicio": 11.52,
+      "fin": 12.56,
+      "texto": "Y no es un invento.",
+      "palabras": 5
+    },
+    {
+      "inicio": 12.8,
+      "fin": 20.8,
+      "texto": "En 1790, unas 27 personas llegaron a la isla de Pitcairn, y 66 años después eran 193.",
+      "palabras": 17
+    },
+    {
+      "inicio": 21.04,
+      "fin": 25.6,
+      "texto": "A ese ritmo, nuestros 10 serían 1000 en unos 160 años.",
+      "palabras": 11
+    },
+    {
+      "inicio": 25.6,
+      "fin": 28.48,
+      "texto": "El problema llega, con los bisnietos.",
+      "palabras": 6
+    },
+    {
+      "inicio": 28.48,
+      "fin": 32.56,
+      "texto": "Cada uno tiene 8 bisabuelos, y en el mundo solo había 10.",
+      "palabras": 12
+    },
+    {
+      "inicio": 32.56,
+      "fin": 36.72,
+      "texto": "Así que todos son primos de todos, y cualquier pareja es familia.",
+      "palabras": 12
+    },
+    {
+      "inicio": 36.72,
+      "fin": 41.52,
+      "texto": "Y eso importa por algo que tú también llevas, genes rotos escondidos.",
+      "palabras": 12
+    },
+    {
+      "inicio": 41.52,
+      "fin": 45.04,
+      "texto": "Con una copia rota no te pasa nada, porque la otra funciona.",
+      "palabras": 12
+    },
+    {
+      "inicio": 45.04,
+      "fin": 57.84,
+      "texto": "Pero si los padres son familia, es más fácil que el hijo reciba las dos rotas entre primos, el riesgo de un hijo con un problema grave casi se duplica, y lo que tenga uno de los diez se acaba repartiendo por todo el pueblo.",
+      "palabras": 45
+    },
+    {
+      "inicio": 57.84,
+      "fin": 62.72,
+      "texto": "En la isla de Tristán de Acuña, de sus 15 fundadores, dos o tres tenían asma.",
+      "palabras": 16
+    },
+    {
+      "inicio": 62.72,
+      "fin": 64.72,
+      "texto": "Hoy la tiene uno de cada tres.",
+      "palabras": 7
+    },
+    {
+      "inicio": 64.75,
+      "fin": 71.39,
+      "texto": "Los biólogos calculan que hacen falta unos 50 para aguantar unas generaciones y 500 para durar siempre.",
+      "palabras": 17
+    },
+    {
+      "inicio": 71.39,
+      "fin": 73.95,
+      "texto": "10 es muy poco, pero no imposible.",
+      "palabras": 7
+    },
+    {
+      "inicio": 73.95,
+      "fin": 79.31,
+      "texto": "El cernícalo de Mauricio llegó a quedarse en 4 en libertad, y hoy hay unos 400.",
+      "palabras": 16
+    },
+    {
+      "inicio": 79.31,
+      "fin": 80.91,
+      "texto": "Así que sí podrían.",
+      "palabras": 4
+    },
+    {
+      "inicio": 80.91,
+      "fin": 84.83,
+      "texto": "Muchos hijos, nada de hermanos con hermanas y mucha suerte.",
+      "palabras": 10
+    },
+    {
+      "inicio": 84.83,
+      "fin": 87.71,
+      "texto": "Porque una sola epidemia se los lleva a todos.",
+      "palabras": 9
+    },
+    {
+      "inicio": 87.71,
+      "fin": 92.83,
+      "texto": "Si sale bien, a ese ritmo volverían a ser 8.000 millones en unos 700 años.",
+      "palabras": 15
+    },
+    {
+      "inicio": 92.83,
+      "fin": 94.51,
+      "texto": "Y no sería la primera vez.",
+      "palabras": 6
+    },
+    {
+      "inicio": 94.51,
+      "fin": 102.51,
+      "texto": "Según un estudio de 2023, hace unos 900.000 años los antepasados de toda la humanidad se quedaron en unos 1.300.",
+      "palabras": 20
+    },
+    {
+      "inicio": 102.51,
+      "fin": 107.95,
+      "texto": "Así que tú, y cualquiera que veas por la calle, sois, en el fondo, un poco primos.",
+      "palabras": 17
+    }
+  ],
+  "sonido": [
+    {
+      "desde": 108,
+      "hasta": 108.565,
+      "media_db": -91,
+      "pico_db": -91,
+      "suena": "silencio"
+    }
+  ]
+}

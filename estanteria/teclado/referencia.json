@@ -1,0 +1,194 @@
+{
+  "archivo": "referencia/reel.mp4",
+  "duracion": 84.33,
+  "ancho": 720,
+  "alto": 1280,
+  "fps": "30/1",
+  "cortes": [
+    63.467
+  ],
+  "cortes_por_minuto": 0.711,
+  "palabras": 288,
+  "palabras_por_segundo": 3.428,
+  "paleta": [
+    {
+      "color": "#181818",
+      "parte": 0.616
+    },
+    {
+      "color": "#686868",
+      "parte": 0.042
+    },
+    {
+      "color": "#484848",
+      "parte": 0.022
+    },
+    {
+      "color": "#483818",
+      "parte": 0.007
+    },
+    {
+      "color": "#888888",
+      "parte": 0.005
+    },
+    {
+      "color": "#b88868",
+      "parte": 0.003
+    },
+    {
+      "color": "#e8b8a8",
+      "parte": 0.003
+    },
+    {
+      "color": "#785828",
+      "parte": 0.003
+    }
+  ],
+  "acentos": [
+    {
+      "color": "#684818",
+      "parte": 0.005
+    },
+    {
+      "color": "#c88868",
+      "parte": 0.002
+    },
+    {
+      "color": "#f8a838",
+      "parte": 0.001
+    },
+    {
+      "color": "#986848",
+      "parte": 0
+    },
+    {
+      "color": "#c88818",
+      "parte": 0
+    }
+  ],
+  "frases": [
+    {
+      "inicio": 0,
+      "fin": 3.76,
+      "texto": "Cada tecla del teclado de tu iPhone es más pequeña que tu pulgar.",
+      "palabras": 13
+    },
+    {
+      "inicio": 3.76,
+      "fin": 6.24,
+      "texto": "Y aún así aciertas la letra casi siempre.",
+      "palabras": 8
+    },
+    {
+      "inicio": 6.24,
+      "fin": 7.84,
+      "texto": "Entonces, ¿cómo es posible?",
+      "palabras": 4
+    },
+    {
+      "inicio": 7.84,
+      "fin": 13.28,
+      "texto": "Porque las teclas que ves no son las que tocas, y las que tocas cambian de tamaño mientras escribes.",
+      "palabras": 19
+    },
+    {
+      "inicio": 13.28,
+      "fin": 18.4,
+      "texto": "Debajo de cada letra hay una zona invisible, y es esa zona la que de verdad atrapa tu toque.",
+      "palabras": 19
+    },
+    {
+      "inicio": 18.4,
+      "fin": 22.56,
+      "texto": "Imagina que le escribes a una amiga y acabas de poner T, A, R, D.",
+      "palabras": 15
+    },
+    {
+      "inicio": 22.56,
+      "fin": 27.84,
+      "texto": "Tu iPhone ya apuesta por lo que viene después, porque tarde es una palabra, y Tard con W",
+      "palabras": 18
+    },
+    {
+      "inicio": 28.4,
+      "fin": 28.72,
+      "texto": "no.",
+      "palabras": 1
+    },
+    {
+      "inicio": 28.72,
+      "fin": 34.4,
+      "texto": "Así que antes de que tu pulgar baje, la zona invisible de la E crece, y las de alrededor se aplastan.",
+      "palabras": 21
+    },
+    {
+      "inicio": 34.4,
+      "fin": 36.32,
+      "texto": "En la pantalla no se mueve nada.",
+      "palabras": 7
+    },
+    {
+      "inicio": 36.32,
+      "fin": 44.24,
+      "texto": "Todas las teclas se ven exactamente iguales, pero si tu pulgar cae un poco desviado, justo entre la E y la V, el iPhone se lo da a la E.",
+      "palabras": 30
+    },
+    {
+      "inicio": 44.24,
+      "fin": 50.08,
+      "texto": "Luego escribes la siguiente letra, y todas las zonven a cambiar, y así con cada letra que escribes.",
+      "palabras": 18
+    },
+    {
+      "inicio": 50.08,
+      "fin": 58.24,
+      "texto": "Apple ya lo metió en el primer iPhone, porque un botón cómodo necesitaba 44 píxeles y la pantalla entera solo medía 320 de ancho.",
+      "palabras": 24
+    },
+    {
+      "inicio": 58.25,
+      "fin": 63.37,
+      "texto": "Ken Cocenda, el ingeniero que hizo ese teclado, lo cuenta en su libro, y luego Apple lo patentó.",
+      "palabras": 18
+    },
+    {
+      "inicio": 63.37,
+      "fin": 65.29,
+      "texto": "Y además tiene un segundo truco.",
+      "palabras": 6
+    },
+    {
+      "inicio": 65.29,
+      "fin": 72.01,
+      "texto": "Tu pulgar tapa la tecla que pulsas, y por eso la letra salta encima de tu dedo, para que veas que has pulsado de verdad.",
+      "palabras": 25
+    },
+    {
+      "inicio": 72.01,
+      "fin": 74.89,
+      "texto": "O sea, que no tienes tanta puntería con los pulgares.",
+      "palabras": 10
+    },
+    {
+      "inicio": 74.89,
+      "fin": 79.69,
+      "texto": "Es tu teclado el que, en silencio, mueve la diana a donde tu pulgar iba a caer.",
+      "palabras": 17
+    },
+    {
+      "inicio": 79.69,
+      "fin": 84.01,
+      "texto": "Sígueme y envíaselo a ese amigo que le echa la culpa de todo al autocorrector.",
+      "palabras": 15
+    }
+  ],
+  "sonido": [
+    {
+      "desde": 27.89,
+      "hasta": 28.35,
+      "media_db": -25.4,
+      "pico_db": -11.4,
+      "suena": "algo"
+    }
+  ]
+}

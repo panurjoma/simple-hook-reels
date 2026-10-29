@@ -1,0 +1,136 @@
+{
+  "archivo": "referencia/reel.mp4",
+  "duracion": 30.57,
+  "ancho": 720,
+  "alto": 1280,
+  "fps": "30/1",
+  "cortes": [],
+  "cortes_por_minuto": 0,
+  "palabras": 107,
+  "palabras_por_segundo": 3.52,
+  "paleta": [
+    {
+      "color": "#181818",
+      "parte": 0.506
+    },
+    {
+      "color": "#9898a8",
+      "parte": 0.035
+    },
+    {
+      "color": "#e8d8b8",
+      "parte": 0.016
+    },
+    {
+      "color": "#c89868",
+      "parte": 0.015
+    },
+    {
+      "color": "#383838",
+      "parte": 0.006
+    },
+    {
+      "color": "#585858",
+      "parte": 0.004
+    },
+    {
+      "color": "#f89898",
+      "parte": 0.003
+    },
+    {
+      "color": "#b8b8b8",
+      "parte": 0.002
+    }
+  ],
+  "acentos": [
+    {
+      "color": "#c89868",
+      "parte": 0.015
+    },
+    {
+      "color": "#0898f8",
+      "parte": 0.001
+    },
+    {
+      "color": "#d85868",
+      "parte": 0.001
+    },
+    {
+      "color": "#685838",
+      "parte": 0.001
+    },
+    {
+      "color": "#e8d868",
+      "parte": 0
+    }
+  ],
+  "frases": [
+    {
+      "inicio": 0,
+      "fin": 2.48,
+      "texto": "¿Por qué el gancho del metro está suelto?",
+      "palabras": 8
+    },
+    {
+      "inicio": 2.48,
+      "fin": 4,
+      "texto": "No, no está roto.",
+      "palabras": 4
+    },
+    {
+      "inicio": 4,
+      "fin": 6.96,
+      "texto": "Se mueve justo lo que mide de grueso, ni un pelo más.",
+      "palabras": 12
+    },
+    {
+      "inicio": 6.96,
+      "fin": 9.36,
+      "texto": "Si lo enganchas en una tabla y tiras, sale.",
+      "palabras": 9
+    },
+    {
+      "inicio": 9.36,
+      "fin": 11.68,
+      "texto": "Y el cero queda justo donde toca la tabla.",
+      "palabras": 9
+    },
+    {
+      "inicio": 11.68,
+      "fin": 13.92,
+      "texto": "Pero si lo empujas contra una pared, entra.",
+      "palabras": 8
+    },
+    {
+      "inicio": 14,
+      "fin": 16.24,
+      "texto": "Y el cero queda justo donde toca la pared.",
+      "palabras": 9
+    },
+    {
+      "inicio": 16.24,
+      "fin": 19.92,
+      "texto": "Así, midas como midas, su grosor nunca se cuela en la medida.",
+      "palabras": 12
+    },
+    {
+      "inicio": 19.92,
+      "fin": 23.28,
+      "texto": "Si lo aprietas, una de las dos medidas te saldrá siempre mal.",
+      "palabras": 12
+    },
+    {
+      "inicio": 23.28,
+      "fin": 25.76,
+      "texto": "Así que sí, está suelto, pero a propósito.",
+      "palabras": 8
+    },
+    {
+      "inicio": 25.76,
+      "fin": 30.4,
+      "texto": "Envíáselo a ese amigo que le ha apretado el gancho al metro pensando que estaba roto.",
+      "palabras": 16
+    }
+  ],
+  "sonido": []
+}

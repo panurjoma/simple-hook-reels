@@ -1,0 +1,248 @@
+{
+  "archivo": "referencia/reel.mp4",
+  "duracion": 90.389,
+  "ancho": 1080,
+  "alto": 1920,
+  "fps": "60/1",
+  "cortes": [
+    12.617,
+    27.383,
+    37.433,
+    48.5,
+    73.917,
+    77.133,
+    79.867
+  ],
+  "cortes_por_minuto": 4.647,
+  "palabras": 260,
+  "palabras_por_segundo": 2.892,
+  "paleta": [
+    {
+      "color": "#888858",
+      "parte": 0.135
+    },
+    {
+      "color": "#181828",
+      "parte": 0.063
+    },
+    {
+      "color": "#b8a8a8",
+      "parte": 0.034
+    },
+    {
+      "color": "#b89868",
+      "parte": 0.014
+    },
+    {
+      "color": "#d8c8b8",
+      "parte": 0.011
+    },
+    {
+      "color": "#483868",
+      "parte": 0.009
+    },
+    {
+      "color": "#685858",
+      "parte": 0.008
+    },
+    {
+      "color": "#e89868",
+      "parte": 0.006
+    }
+  ],
+  "acentos": [
+    {
+      "color": "#483868",
+      "parte": 0.009
+    },
+    {
+      "color": "#c89868",
+      "parte": 0.008
+    },
+    {
+      "color": "#f8b888",
+      "parte": 0.001
+    },
+    {
+      "color": "#987848",
+      "parte": 0.001
+    },
+    {
+      "color": "#783838",
+      "parte": 0
+    }
+  ],
+  "frases": [
+    {
+      "inicio": 0,
+      "fin": 5.76,
+      "texto": "Si la bomba más grande de la historia cayera en Madrid, en Barcelona te podrían reventar las ventanas.",
+      "palabras": 18
+    },
+    {
+      "inicio": 5.76,
+      "fin": 7.28,
+      "texto": "Y no hablo de Hiroshima.",
+      "palabras": 5
+    },
+    {
+      "inicio": 7.28,
+      "fin": 8.72,
+      "texto": "Esa se queda muy corta.",
+      "palabras": 5
+    },
+    {
+      "inicio": 8.72,
+      "fin": 9.68,
+      "texto": "Vamos subiendo.",
+      "palabras": 2
+    },
+    {
+      "inicio": 9.68,
+      "fin": 11.28,
+      "texto": "Explosión a explosión.",
+      "palabras": 3
+    },
+    {
+      "inicio": 11.28,
+      "fin": 12.32,
+      "texto": "Desde un petardo.",
+      "palabras": 3
+    },
+    {
+      "inicio": 12.4,
+      "fin": 14.88,
+      "texto": "Uno de los que se venden a partir de 16 años.",
+      "palabras": 11
+    },
+    {
+      "inicio": 14.88,
+      "fin": 17.36,
+      "texto": "La ley te pide alejarte 8 metros.",
+      "palabras": 7
+    },
+    {
+      "inicio": 17.36,
+      "fin": 21.44,
+      "texto": "Una granada de mano, la M67 del ejército de Estados Unidos.",
+      "palabras": 11
+    },
+    {
+      "inicio": 21.44,
+      "fin": 26.88,
+      "texto": "A 5 metros te mata, a 15 te hiere, y la metralla vuela hasta 230.",
+      "palabras": 15
+    },
+    {
+      "inicio": 27.12,
+      "fin": 32.32,
+      "texto": "Ahora, la GBU 43, a la que llaman la madre de todas las bombas.",
+      "palabras": 14
+    },
+    {
+      "inicio": 32.32,
+      "fin": 37.2,
+      "texto": "11 toneladas de explosivo, y en unos 140 metros no deja nada en pie.",
+      "palabras": 14
+    },
+    {
+      "inicio": 37.36,
+      "fin": 38.88,
+      "texto": "Pero un accidente la superó.",
+      "palabras": 5
+    },
+    {
+      "inicio": 38.88,
+      "fin": 41.28,
+      "texto": "El puerto de Beirut, en 2020.",
+      "palabras": 6
+    },
+    {
+      "inicio": 41.28,
+      "fin": 43.44,
+      "texto": "Unas mil toneladas de golpe.",
+      "palabras": 5
+    },
+    {
+      "inicio": 43.44,
+      "fin": 48.16,
+      "texto": "Rompió cristales a 10 kilómetros y se oyó en Chipre, a 240.",
+      "palabras": 12
+    },
+    {
+      "inicio": 48.16,
+      "fin": 52.64,
+      "texto": "Y aún así es unas 20 veces menos que Little Boy, la bomba de Hiroshima.",
+      "palabras": 15
+    },
+    {
+      "inicio": 52.64,
+      "fin": 57.44,
+      "texto": "En kilómetro y medio lo arrasó todo, y casi todo quedó destrozado hasta casi 5.",
+      "palabras": 15
+    },
+    {
+      "inicio": 57.44,
+      "fin": 60,
+      "texto": "Ahora multiplica Hiroshima por más de 3.000.",
+      "palabras": 7
+    },
+    {
+      "inicio": 60.21,
+      "fin": 65.09,
+      "texto": "La bomba del zar, la que probó la Unión Soviética en 1961.",
+      "palabras": 12
+    },
+    {
+      "inicio": 65.09,
+      "fin": 69.57,
+      "texto": "Un pueblo a 55 kilómetros se quedó sin un solo edificio en pie.",
+      "palabras": 13
+    },
+    {
+      "inicio": 69.57,
+      "fin": 76.69,
+      "texto": "A 100 kilómetros, su calor te podía dar quemaduras de tercer grado, y rompió cristales hasta a 900 kilómetros.",
+      "palabras": 19
+    },
+    {
+      "inicio": 76.69,
+      "fin": 79.41,
+      "texto": "Su onda dio tres vueltas a la Tierra.",
+      "palabras": 8
+    },
+    {
+      "inicio": 79.41,
+      "fin": 83.81,
+      "texto": "Así que con ella cayendo en Madrid, ni en Barcelona estarías del todo a salvo.",
+      "palabras": 15
+    },
+    {
+      "inicio": 83.81,
+      "fin": 86.29,
+      "texto": "Y ojo, la diseñaron para el doble.",
+      "palabras": 7
+    },
+    {
+      "inicio": 86.29,
+      "fin": 87.97,
+      "texto": "¿Por qué la dejaron a la mitad?",
+      "palabras": 7
+    },
+    {
+      "inicio": 87.97,
+      "fin": 89.89,
+      "texto": "Te lo cuento en el próximo.",
+      "palabras": 6
+    }
+  ],
+  "sonido": [
+    {
+      "desde": 89.94,
+      "hasta": 90.389,
+      "media_db": -91,
+      "pico_db": -91,
+      "suena": "silencio"
+    }
+  ]
+}

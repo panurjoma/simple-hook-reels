@@ -1,0 +1,232 @@
+{
+  "archivo": "referencia/reel.mp4",
+  "duracion": 125.099,
+  "ancho": 1080,
+  "alto": 1920,
+  "fps": "60/1",
+  "cortes": [],
+  "cortes_por_minuto": 0,
+  "palabras": 344,
+  "palabras_por_segundo": 2.756,
+  "paleta": [
+    {
+      "color": "#081828",
+      "parte": 0.123
+    },
+    {
+      "color": "#e8f8f8",
+      "parte": 0.072
+    },
+    {
+      "color": "#c8d8e8",
+      "parte": 0.056
+    },
+    {
+      "color": "#283858",
+      "parte": 0.039
+    },
+    {
+      "color": "#8898a8",
+      "parte": 0.023
+    },
+    {
+      "color": "#485888",
+      "parte": 0.021
+    },
+    {
+      "color": "#b8b8b8",
+      "parte": 0.019
+    },
+    {
+      "color": "#a8a878",
+      "parte": 0.019
+    }
+  ],
+  "acentos": [
+    {
+      "color": "#384878",
+      "parte": 0.027
+    },
+    {
+      "color": "#3868b8",
+      "parte": 0.01
+    },
+    {
+      "color": "#6898d8",
+      "parte": 0.01
+    },
+    {
+      "color": "#78b858",
+      "parte": 0.005
+    },
+    {
+      "color": "#884878",
+      "parte": 0.002
+    }
+  ],
+  "frases": [
+    {
+      "inicio": 0,
+      "fin": 5.92,
+      "texto": "45 personas cayeron con este avión en los Andes, y solo 16 bajaron vivas.",
+      "palabras": 14
+    },
+    {
+      "inicio": 5.92,
+      "fin": 8.16,
+      "texto": "72 días después.",
+      "palabras": 3
+    },
+    {
+      "inicio": 8.16,
+      "fin": 9.84,
+      "texto": "No los salvó la suerte.",
+      "palabras": 5
+    },
+    {
+      "inicio": 9.84,
+      "fin": 12.96,
+      "texto": "Los salvó una cadena de decisiones imposibles.",
+      "palabras": 7
+    },
+    {
+      "inicio": 12.96,
+      "fin": 18.08,
+      "texto": "Era un equipo de rugby de Uruguay, con familia y amigos cruzando la cordillera hacia Chile.",
+      "palabras": 16
+    },
+    {
+      "inicio": 18.08,
+      "fin": 23.04,
+      "texto": "Entre las nubes, el piloto giró demasiado pronto, y el avión chocó contra una montaña.",
+      "palabras": 15
+    },
+    {
+      "inicio": 23.04,
+      "fin": 30.72,
+      "texto": "Perdió las alas y la cola, y lo que quedó bajó deslizándose por un glaciar hasta pararse a 3.570 metros.",
+      "palabras": 20
+    },
+    {
+      "inicio": 30.72,
+      "fin": 34.88,
+      "texto": "De noche, dentro de ese tubo, hacía 30 grados bajo cero.",
+      "palabras": 11
+    },
+    {
+      "inicio": 34.88,
+      "fin": 44.4,
+      "texto": "Los aviones de rescate pasaron por encima, pero un avión sobre la nieve no se ve, y el día 11, en una radio pequeña, oyeron que dejaban de buscarlos.",
+      "palabras": 29
+    },
+    {
+      "inicio": 44.4,
+      "fin": 48.88,
+      "texto": "Quedan 27 vivos, y la poca comida que tenían se acabó.",
+      "palabras": 11
+    },
+    {
+      "inicio": 48.88,
+      "fin": 54.96,
+      "texto": "Así que tomaron la decisión más dura de sus vidas, alimentarse de los cuerpos de los que habían muerto.",
+      "palabras": 19
+    },
+    {
+      "inicio": 55.13,
+      "fin": 57.85,
+      "texto": "¿Era eso o morir todos allí arriba?",
+      "palabras": 7
+    },
+    {
+      "inicio": 57.85,
+      "fin": 63.85,
+      "texto": "El día 17, mientras dormían, una avalancha llenó el avión de nieve hasta un metro del techo.",
+      "palabras": 17
+    },
+    {
+      "inicio": 63.85,
+      "fin": 65.61,
+      "texto": "Murieron ocho más.",
+      "palabras": 3
+    },
+    {
+      "inicio": 65.61,
+      "fin": 71.37,
+      "texto": "Entendieron que nadie iba a venir, así que cosieron un saco de dormir con el relleno del avión.",
+      "palabras": 18
+    },
+    {
+      "inicio": 71.37,
+      "fin": 78.25,
+      "texto": "El día 61, tres de ellos escalaron sin equipo una montaña de 4.650 metros.",
+      "palabras": 14
+    },
+    {
+      "inicio": 78.25,
+      "fin": 83.29,
+      "texto": "Arriba esperaban ver los valles verdes de Chile, y solo vieron más montañas.",
+      "palabras": 13
+    },
+    {
+      "inicio": 83.29,
+      "fin": 90.65,
+      "texto": "Uno volvió al avión, y siguieron dos, Nando Parrado y Roberto Canesa, 10 días y unos 60 kilómetros a pie.",
+      "palabras": 20
+    },
+    {
+      "inicio": 90.65,
+      "fin": 94.57,
+      "texto": "Al otro lado de un río vieron a un arriero a caballo, Sergio Catalán.",
+      "palabras": 14
+    },
+    {
+      "inicio": 94.57,
+      "fin": 99.37,
+      "texto": "El río tanto que no se oían, así que él les lanzó un papel atado a una piedra.",
+      "palabras": 18
+    },
+    {
+      "inicio": 99.37,
+      "fin": 102.89,
+      "texto": "Nando escribió: Vengo de un avión que cayó en las montañas.",
+      "palabras": 11
+    },
+    {
+      "inicio": 102.89,
+      "fin": 109.29,
+      "texto": "Catalán cabalgó diez horas para avisar, y al día siguiente llegaron los helicópteros, guiados por el propio Nando.",
+      "palabras": 18
+    },
+    {
+      "inicio": 109.29,
+      "fin": 111.85,
+      "texto": "El día 72 bajaron los últimos.",
+      "palabras": 6
+    },
+    {
+      "inicio": 111.85,
+      "fin": 113.29,
+      "texto": "Dieciséis vivos.",
+      "palabras": 2
+    },
+    {
+      "inicio": 113.29,
+      "fin": 114.41,
+      "texto": "Nadie los encontró.",
+      "palabras": 3
+    },
+    {
+      "inicio": 114.5,
+      "fin": 118.74,
+      "texto": "Salieron porque dos de ellos decidieron cruzar la cordillera andando.",
+      "palabras": 10
+    },
+    {
+      "inicio": 118.74,
+      "fin": 124.82,
+      "texto": "Y si crees que esto es lo más extremo que ha aguantado alguien, sígueme, porque la próxima historia lo supera.",
+      "palabras": 20
+    }
+  ],
+  "sonido": []
+}
