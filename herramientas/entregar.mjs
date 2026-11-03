@@ -9,6 +9,7 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, statSync } f
 import { basename, join } from "node:path";
 import { RAIZ, aperturas, duracion, fallo, ffm, hyperframes, posicional, proyecto, r3, resumen, tiene } from "./_comun.mjs";
 import { montar } from "./montar.mjs";
+import { portada } from "./portada.mjs";
 import { datos, referenciaDe } from "./medir.mjs";
 
 const { dir, guion } = proyecto(posicional());
@@ -31,9 +32,9 @@ for (const ap of aperturas(guion)) {
     rmSync(mp4, { force: true });
     fallo(`${ap.id} no pasa las medidas, no se entrega:\n${j.fallos.map((f) => " - " + f).join("\n")}\nArregla las escenas y vuelve a revisar.`);
   }
-  const portada = join(salida, `portada-${ap.id}.jpg`);
-  ffm(["-ss", String(Math.min(1, d / 2)), "-i", mp4, "-frames:v", "1", "-q:v", "2", portada]);
-  hechos.push(mp4, portada);
+  const pj = portada(dir, ap.id);
+  if (!pj) fallo(`${ap.id}: falta portada.json (3 líneas de título hook, la 2.ª en dorado); la portada no es un frame suelto`);
+  hechos.push(mp4, pj);
 }
 if (existsSync(join(dir, "pie.txt"))) { copyFileSync(join(dir, "pie.txt"), join(salida, "caption.txt")); hechos.push(join(salida, "caption.txt")); }
 else console.log("aviso: no hay pie.txt; el texto del post falta");

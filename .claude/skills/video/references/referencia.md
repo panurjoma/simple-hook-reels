@@ -56,7 +56,8 @@ por si puede ponerla desde la biblioteca de la red social. Sus datos no son dato
 
 ## 5. Qué puede cambiar
 
-Solo lo que obliga el tema, `viral.md` y el cierre del creador. Cada cambio, con su razón en `notas.md` («el nuestro es
+Solo lo que obliga el tema, `viral.md`, las preferencias del creador y su cierre. Sus primeros planos parciales con
+detalle pueden requerir un encuadre más cercano que el de la referencia. Cada cambio, con su razón en `notas.md` («el nuestro es
 un planeta, no un coche»). «Queda mejor» no es una razón. Si el tema no cabe en su forma, díselo al creador en una
 línea y copia solo lo que encaje.
 
@@ -72,4 +73,4 @@ datos para comparar con los suyos, nunca una nota que aprobar.
 Si el creador quiere el aspecto de un vídeo en todos los suyos (colores, dibujo, letra), guárdalo en
 `trabajo/estilo/` (el vídeo, su estilo en `estilo.md` y su `estilo.css` en `trabajo/estilo.css`, que copia cada
 proyecto nuevo). Ese aspecto manda sobre el de la casa y sobre el de cualquier referencia; los planos y el ritmo
-siguen saliendo de la referencia.
+parten de la referencia, con los acercamientos que requieran las preferencias del creador.

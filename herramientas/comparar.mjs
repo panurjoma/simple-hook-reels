@@ -6,7 +6,7 @@
 // Las celdas se encogen cuando hay muchas (de 1/4 a 1/8 del tamaño real): una imagen grande cuesta tokens cada vez
 // que la IA relee la conversación, y más allá de un tamaño tampoco se ve mejor.
 // En lo nuestro van pintadas en rojo las franjas que tapa Instagram (SEGURA en _comun.mjs): nada importante ahí.
-import { mkdirSync, renameSync, rmSync } from "node:fs";
+import { existsSync, mkdirSync, renameSync, rmSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { SEGURA, arg, ffm, posicional, rotulo } from "./_comun.mjs";
 
@@ -45,8 +45,11 @@ export function rejilla(grupos, salida) {
       const f = join(tmp, `c${i}-${j}.png`), c = g[j];
       if (!c) { negro(f); celdas.push(f); continue; }
       const r = rotulo(c.texto, 6, 5, 16);
-      ffm(["-ss", String(c.t), "-i", c.video, "-frames:v", "1", "-vf",
-        `scale=${w}:${h}${c.guias ? "," + guias(w, h) : ""},drawbox=x=0:y=0:w=${w}:h=26:color=black@0.7:t=fill${r ? "," + r : ""}`, f]);
+      try {
+        ffm(["-ss", String(c.t), "-i", c.video, "-frames:v", "1", "-vf",
+          `scale=${w}:${h}${c.guias ? "," + guias(w, h) : ""},drawbox=x=0:y=0:w=${w}:h=26:color=black@0.7:t=fill${r ? "," + r : ""}`, f]);
+      } catch { negro(f); }
+      if (!existsSync(f)) negro(f); // un vídeo más corto que el otro: esa celda va en negro
       celdas.push(f);
     }
     if (k === 1) renameSync(celdas[0], nombre(i));

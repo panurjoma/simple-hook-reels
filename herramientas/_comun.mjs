@@ -12,6 +12,8 @@ export const WIN = process.platform === "win32";
 // La zona segura de un reel de 1080 × 1920: lo que Instagram no tapa. Arriba, su barra; abajo, el nombre, el texto y
 // la música; a la derecha, la columna de botones (desde y = 1050). Lo mismo que K.SEGURA en plantilla/kit.js.
 export const SEGURA = { izq: 65, der: 1015, arriba: 270, abajo: 1440, botones: { x: 950, y: 1050 } };
+// Donde está Pablo, el profesor del canal, en todos los vídeos: nada importante de la escena va ahí.
+export const PERSONAJE = { izq: 65, der: 285, arriba: 1090, abajo: 1440 };
 
 // --ayuda en cualquier herramienta: imprime su cabecera, que dice cómo se usa, y sale. Así nadie tiene que leer el
 // código para usarla.
@@ -72,9 +74,32 @@ export function duracion(f) {
 // HyperFrames por npx, con la versión fija. En Windows npx es un .cmd: va con shell y cada argumento entre comillas.
 // La salida se guarda y no se imprime: quien llama enseña resumen(r) solo si algo falla.
 export function hyperframes(args, { cwd = RAIZ } = {}) {
-  const npx = WIN ? "npx.cmd" : "npx";
   // HF_WORKERS limita los procesos de render (máquinas con poca memoria gráfica y escenas 3D pesadas)
   const extra = args[0] === "render" && process.env.HF_WORKERS ? ["--workers", process.env.HF_WORKERS] : [];
+  // El render va primero en CPU; solo si falla y hay una NVIDIA, se repite con la GPU (codificación y captura de
+  // Chrome). Con la GPU por delante salió más lento y con un archivo mayor (ver trabajo/maquina.md). HF_GPU=0 quita
+  // el reintento con GPU.
+  // HF_GPU_PRIMERO=1: la GPU desde el primer intento (poca RAM y escenas 3D pesadas).
+  if (args[0] === "render" && process.env.HF_GPU_PRIMERO === "1" && hayGpu() && !args.includes("--gpu")) {
+    const g = ejecutar([...args, "--gpu", "--browser-gpu"], extra, cwd);
+    if (g.ok) return g;
+  }
+  const r = ejecutar(args, extra, cwd);
+  if (r.ok || args[0] !== "render" || args.includes("--gpu") || !hayGpu()) return r;
+  return ejecutar([...args, "--gpu", "--browser-gpu"], extra, cwd);
+}
+
+let _gpu;
+function hayGpu() {
+  if (_gpu === undefined) {
+    _gpu = process.env.HF_GPU !== "0" && spawnSync("nvidia-smi", ["-L"], { stdio: "ignore" }).status === 0;
+  }
+  return _gpu;
+}
+
+function ejecutar(args, extra, cwd) {
+  const npx = WIN ? "npx.cmd" : "npx";
+  extra = [...extra];
   // HF_CHECK_TIMEOUT da más tiempo a check para que carguen las escenas 3D pesadas (ms)
   if (args[0] === "check" && process.env.HF_CHECK_TIMEOUT) extra.push("--timeout", process.env.HF_CHECK_TIMEOUT);
   // HF_CHECK_SAMPLES limita las muestras de check y quita el contraste (un lienzo 3D no tiene texto que medir)

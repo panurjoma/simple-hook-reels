@@ -13,6 +13,9 @@
     // abajo; la columna de botones a la derecha desde y = 1050). Lo importante va dentro. revisar.mjs lo comprueba.
     SEGURA: { izq: 65, der: 1015, arriba: 270, abajo: 1440, botones: { x: 950, y: 1050 } },
 
+    // Donde está Pablo, el profesor, en todos los vídeos (abajo a la izquierda). Nada importante de la escena va ahí.
+    PERSONAJE: { izq: 65, der: 285, arriba: 1090, abajo: 1440 },
+
     // Ya no hay cámara que deriva sola: la cámara se queda quieta y solo se mueve en una palabra que nombra algo
     // (K.zoomA, K.encuadre). Se deja vacía para que las escenas viejas sigan funcionando.
     camara: function () {},

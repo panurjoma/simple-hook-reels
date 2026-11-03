@@ -13,13 +13,30 @@
 // Dentro de la escena, __CUES__ se cambia por los segundos de cada palabra desde que empieza la escena:
 //   C["azul"] la primera vez que se dice «azul», C["azul#2"] la segunda, C["@1"] la primera frase, C["@fin"] el final
 // de la última. __DURACION__ es lo que dura la escena y __ID__ su identificador.
+import { execFileSync } from "node:child_process";
 import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { RAIZ, aperturas, clave, fallo, leerJson, posicional, proyecto, r3, tiene } from "./_comun.mjs";
+import { RAIZ, aperturas, clave, fallo, ffmpeg, leerJson, posicional, proyecto, r3, tiene } from "./_comun.mjs";
 
 const { dir, guion } = proyecto(posicional());
 export const ENCADENADO = 0.3;
 const ANTICIPO = 0.08; // la palabra aparece un poco antes de oírse, para que se lea a tiempo
+
+// Cuánto abre la boca Pablo en cada fotograma (30 por segundo): la energía de la propia voz, de 0 a 1.
+function bocaDe(wav, total) {
+  const buf = execFileSync(ffmpeg(), ["-v", "error", "-i", wav, "-f", "f32le", "-ac", "1", "-ar", "8000", "-"], { maxBuffer: 1 << 28 });
+  const m = new Float32Array(buf.buffer, buf.byteOffset, Math.floor(buf.length / 4));
+  const n = Math.ceil(total * 30) + 2, e = [];
+  for (let i = 0; i < n; i++) {
+    let s = 0, c = 0;
+    for (let k = Math.floor((i * 8000) / 30); k < Math.min(m.length, Math.floor(((i + 1) * 8000) / 30)); k++) { s += m[k] * m[k]; c++; }
+    e.push(c ? Math.sqrt(s / c) : 0);
+  }
+  const orden = [...e].filter((x) => x > 0.004).sort((a, b) => a - b);
+  const tope = orden[Math.floor(orden.length * 0.9)] || 0.1;
+  const crudo = e.map((x) => (x < 0.004 ? 0 : Math.min(1, x / tope)));
+  return crudo.map((x, i) => r3(0.5 * x + 0.25 * (crudo[i - 1] ?? x) + 0.25 * (crudo[i + 1] ?? x)));
+}
 
 export function montar(dir, guion, ap) {
   const voz = leerJson(join(dir, "voz", `${ap.id}.json`));
@@ -84,6 +101,17 @@ export function montar(dir, guion, ap) {
   });
   writeFileSync(join(out, "compositions", "subtitulos.html"), subtitulos(bloques, voz.duracion, modo));
 
+  // Pablo, el profesor: abajo a la izquierda en todos los vídeos. Habla con la energía de la voz y asiente en las claves.
+  // guion.json → "personaje": false lo quita (solo si el creador lo pide).
+  if (guion.personaje !== false) {
+    const nHook = voz.frases.filter((f) => f.parte === "hook").length;
+    const hook = r3(voz.frases[Math.max(0, nHook - 1)]?.fin ?? 0);
+    const gestos = voz.palabras.filter((w) => w.clave).map((w) => r3(w.inicio));
+    writeFileSync(join(out, "compositions", "profesor.html"), readFileSync(join(RAIZ, "plantilla", "profesor.html"), "utf8")
+      .replaceAll("__BOCA__", JSON.stringify(bocaDe(join(dir, "voz", `${ap.id}.wav`), voz.duracion)))
+      .replaceAll("__GESTOS__", JSON.stringify(gestos)).replaceAll("__HOOK__", String(hook)).replaceAll("__DURACION__", String(voz.duracion)));
+  }
+
   // Los efectos que dejó sonido.mjs para esta apertura (sonidos/<apertura>.json), ya cortados, colocados y con su
   // volumen frente a la voz. También vale { "archivo": "sonidos/x.wav", "en": 3.2 } o "palabra" en guion.sonidos.
   const sonidos = (leerJson(join(dir, "sonidos", `${ap.id}.json`)) || guion.sonidos || []).map((s, i) => {
@@ -101,13 +129,13 @@ export function montar(dir, guion, ap) {
   const estilo = existsSync(join(dir, "estilo.css")) ? readFileSync(join(dir, "estilo.css"), "utf8") : readFileSync(join(RAIZ, "plantilla", "estilo.css"), "utf8");
   // recursos/mundo.js (si existe) se carga junto al kit: el dibujo compartido por todas las escenas del vídeo.
   const mundo = existsSync(join(dir, "recursos", "mundo.js")) ? `    <script src="recursos/mundo.js"></script>\n` : "";
-  writeFileSync(join(out, "index.html"), indice(tramos, voz.duracion, estilo, modo, sonidos, guion.escenas || {}).replace(`    <script src="kit.js"></script>\n`, `    <script src="kit.js"></script>\n${mundo}`));
+  writeFileSync(join(out, "index.html"), indice(tramos, voz.duracion, estilo, modo, sonidos, guion.escenas || {}, guion.personaje !== false).replace(`    <script src="kit.js"></script>\n`, `    <script src="kit.js"></script>\n${mundo}`));
   writeFileSync(join(out, "hyperframes.json"), JSON.stringify({ $schema: "https://hyperframes.heygen.com/schema/hyperframes.json", paths: { blocks: "compositions", assets: "recursos" } }, null, 2) + "\n");
   writeFileSync(join(out, "package.json"), JSON.stringify({ name: `${ap.id}`, private: true, type: "module" }, null, 2) + "\n");
   return { out, tramos, voz };
 }
 
-function indice(tramos, total, estilo, modo, sonidos, ajustes) {
+function indice(tramos, total, estilo, modo, sonidos, ajustes, personaje) {
   const hosts = tramos.map((s, i) => `      <div id="h-${s.id}" class="escena" data-composition-id="${s.id}" data-composition-src="compositions/${s.id}.html"
         data-start="${s.inicio}" data-duration="${s.dur}" data-track-index="${i % 2}" data-width="1080" data-height="1920"></div>`).join("\n");
   // Cómo se cambia de escena lo dice la referencia (guion.json → "escenas": { "<escena>": { "entrada": ... } }):
@@ -127,6 +155,8 @@ function indice(tramos, total, estilo, modo, sonidos, ajustes) {
   }).filter(Boolean).join("\n");
   const subs = modo === "no" ? "" : `      <div id="h-subtitulos" data-composition-id="subtitulos" data-composition-src="compositions/subtitulos.html"
         data-start="0" data-duration="${total}" data-track-index="5" data-width="1080" data-height="1920"></div>`;
+  const pablo = personaje ? `      <div id="h-profesor" data-composition-id="profesor" data-composition-src="compositions/profesor.html"
+        data-start="0" data-duration="${total}" data-track-index="6" data-width="1080" data-height="1920"></div>` : "";
   const audios = sonidos.map((s, i) => `      <audio id="${s.id}" src="${s.archivo}" data-start="${s.en}" data-track-index="${11 + i}" data-volume="${s.volumen ?? 0.6}"></audio>`).join("\n");
   return `<!doctype html>
 <html lang="es">
@@ -148,6 +178,7 @@ ${estilo}
     <div id="main" data-composition-id="main" data-start="0" data-duration="${total}" data-width="1080" data-height="1920">
 ${hosts}
 ${subs}
+${pablo}
       <audio id="voz" src="voz.wav" data-start="0" data-duration="${total}" data-track-index="10" data-volume="1"></audio>
 ${audios}
     </div>

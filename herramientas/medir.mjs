@@ -157,7 +157,7 @@ function fft2(re, im, w, h, inv) {
 }
 export function tirones(video, cortesT = []) {
   const w = 64, h = 128, P = w * h;
-  const fps = Number(eval(spawnSync(ffprobe(), ["-v", "error", "-select_streams", "v", "-show_entries", "stream=r_frame_rate", "-of", "csv=p=0", video], { encoding: "utf8" }).stdout.trim()));
+  const fps = Number(eval(spawnSync(ffprobe(), ["-v", "error", "-select_streams", "v", "-show_entries", "stream=r_frame_rate", "-of", "csv=p=0", video], { encoding: "utf8" }).stdout.trim().split(/[\s,]+/)[0]));
   // Solo la zona de dibujo, sin las franjas de los subtítulos (arriba y abajo): un subtítulo que cambia no es un tirón.
   const b = spawnSync(ffmpeg(), ["-v", "error", "-i", video, "-vf", `${A1080},crop=1080:760:0:540,scale=${w}:${h},format=gray`, "-f", "rawvideo", "-"], { maxBuffer: 1 << 30 }).stdout;
   const n = Math.floor(b.length / P), han = new Float64Array(P);

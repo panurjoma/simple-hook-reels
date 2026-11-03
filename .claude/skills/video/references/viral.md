@@ -48,6 +48,13 @@ Nunca:
 Justo después del hook se descarta la explicación que el espectador ya está pensando («No es X»), y si la pregunta no
 se ha dicho, se dice: así no se va creyendo que ya lo sabe.
 
+## Pablo, el profesor (excepción pedida por el creador)
+
+Todos los vídeos llevan a Pablo, un profesor joven abajo a la izquierda (`AGENTS.md`). Por eso, y solo por eso:
+- El hook es **una pregunta corta** dicha por él, y se juzga con las mismas cinco pruebas.
+- Después del hook, directo a explicar: Pablo nunca se presenta ni dice su profesión.
+- Todo lo demás sigue igual. Pablo no tapa nada: la imagen principal sigue siendo la cosa del hook.
+
 ## El guion: que se quede hasta el final
 
 - **Como se habla:** como si se lo contaras a un amigo, cara a cara. Frases con su pegamento («así que», «por eso»,
@@ -119,10 +126,13 @@ dibujo plano, 3D o foto) sale de la referencia. Esto vale siempre:
 
 ## El sonido
 
-- **Por defecto, ninguno.** El mejor vídeo de la estantería no lleva efectos, y un mal sonido es peor que ninguno.
-- Si el creador los quiere: como mucho cuatro, cada uno de algo físico que se ve (un golpe, un clic, algo que se
-  rompe, algo que cae), que suena a eso, dura lo que dura eso y cae cuando pasa. Nunca un ambiente, una música, un
-  barrido, un brillo ni un cambio de escena. Si hay sonidos aprobados en `sonidos/`, se usan esos.
+- **El creador quiere efectos cuando encajen (no los descartes).** Un efecto va cuando ayuda de verdad: algo físico que se
+  ve y que suena a eso. Un mal sonido es peor que ninguno, así que solo se usan los aprobados de `sonidos/`. Si el
+  vídeo pide uno y no hay en `sonidos/`, sigue sin él y apunta en `notas.md` qué efecto habría encajado y dónde, para que
+  el creador lo añada.
+- Como mucho cuatro, cada uno de algo físico que se ve (un golpe, un clic, algo que se rompe, algo que cae), que suena a
+  eso, dura lo que dura eso y cae cuando pasa. Nunca un ambiente, una música, un barrido, un brillo ni un cambio de
+  escena.
 - La voz, siempre por encima. Sin música que no se pidió.
 
 ## Antes de enseñar nada

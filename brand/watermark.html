@@ -1,0 +1,12 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;width:512px;height:512px;background:transparent;overflow:hidden}
+</style></head><body>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<circle cx="256" cy="256" r="210" fill="none" stroke="#fff" stroke-width="22"/>
+<path id="p" fill="none" stroke="#fff" stroke-width="26" stroke-linecap="round"/>
+<circle cx="256" cy="256" r="30" fill="#fff"/>
+</svg>
+<script>
+let d="";for(let x=110;x<=402;x+=3){const u=(x-256)/146*Math.PI*1.5;const y=256-80*Math.sin(u);d+=(d?"L":"M")+x+" "+y.toFixed(1)}
+document.getElementById("p").setAttribute("d",d);
+</script></body></html>

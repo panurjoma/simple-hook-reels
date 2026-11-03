@@ -1,0 +1,22 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;width:1024px;height:1024px;background:#060a12;overflow:hidden}
+</style></head><body>
+<svg id="s" width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<radialGradient id="bg" cx="50%" cy="50%" r="70%"><stop offset="0" stop-color="#14203a"/><stop offset="1" stop-color="#060a12"/></radialGradient>
+<linearGradient id="w" x1="0" x2="1"><stop offset="0" stop-color="#3f86c7" stop-opacity="0.15"/><stop offset=".5" stop-color="#cfe3f7"/><stop offset="1" stop-color="#3f86c7" stop-opacity="0.9"/></linearGradient>
+<radialGradient id="g"><stop offset="0" stop-color="#cfe3f7" stop-opacity="0.95"/><stop offset="1" stop-color="#3f86c7" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="1024" height="1024" fill="url(#bg)"/>
+<g stroke="#8fa0b5" stroke-opacity=".22" stroke-width="3"><line x1="120" y1="512" x2="904" y2="512"/><line x1="512" y1="120" x2="512" y2="904"/></g>
+<circle cx="512" cy="512" r="330" fill="none" stroke="#2c394d" stroke-width="14"/>
+<circle cx="512" cy="512" r="330" fill="none" stroke="#8fa0b5" stroke-opacity=".6" stroke-width="3"/>
+<path id="p" fill="none" stroke="url(#w)" stroke-width="30" stroke-linecap="round"/>
+<circle cx="512" cy="512" r="95" fill="url(#g)"/>
+<circle cx="512" cy="512" r="30" fill="#f2f5f9"/>
+</svg>
+<script>
+// Seno que pasa por el origen con fase cero: y = -A sin(k (x - 512)), dentro del anillo
+let d="";for(let x=262;x<=762;x+=4){const u=(x-512)/250*Math.PI*1.5;const y=512-150*Math.sin(u);d+=(d?"L":"M")+x+" "+y.toFixed(1)}
+document.getElementById("p").setAttribute("d",d);
+</script></body></html>
