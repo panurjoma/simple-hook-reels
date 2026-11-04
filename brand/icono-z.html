@@ -1,0 +1,27 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;width:1024px;height:1024px;background:#060a12;overflow:hidden}
+text{font-family:"Arial Black","Arial",sans-serif;text-anchor:middle}
+</style></head><body>
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<radialGradient id="bg" cx="50%" cy="45%" r="70%"><stop offset="0" stop-color="#14203a"/><stop offset="1" stop-color="#060a12"/></radialGradient>
+<linearGradient id="w" x1="0" x2="1"><stop offset="0" stop-color="#3f86c7" stop-opacity="0.25"/><stop offset=".5" stop-color="#cfe3f7"/><stop offset="1" stop-color="#3f86c7" stop-opacity="0.95"/></linearGradient>
+<radialGradient id="g"><stop offset="0" stop-color="#cfe3f7" stop-opacity="0.95"/><stop offset="1" stop-color="#3f86c7" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="1024" height="1024" fill="url(#bg)"/>
+<g transform="translate(512 512) scale(.86) translate(-512 -512)">
+<g stroke="#8fa0b5" stroke-opacity=".22" stroke-width="3"><line x1="92" y1="512" x2="932" y2="512"/><line x1="512" y1="92" x2="512" y2="932"/></g>
+<circle cx="512" cy="512" r="385" fill="none" stroke="#2c394d" stroke-width="16"/>
+<circle cx="512" cy="512" r="385" fill="none" stroke="#8fa0b5" stroke-opacity=".6" stroke-width="3"/>
+<path id="p" fill="none" stroke="url(#w)" stroke-width="38" stroke-linecap="round"/>
+<circle cx="512" cy="512" r="125" fill="url(#g)"/>
+<circle cx="512" cy="512" r="70" fill="#f2f5f9"/>
+<text x="512" y="546" font-size="100" fill="#0b1426">0</text>
+</g>
+<text x="512" y="148" font-size="78" fill="#f2f5f9" letter-spacing="6">FASE</text>
+<text x="512" y="935" font-size="68" fill="#6fb0ee" letter-spacing="5">SCIENCE</text>
+</svg>
+<script>
+let d="";for(let x=202;x<=822;x+=4){const u=(x-512)/310*Math.PI*1.5;d+=(d?"L":"M")+x+" "+(512-165*Math.sin(u)).toFixed(1)}
+document.getElementById("p").setAttribute("d",d);
+</script></body></html>

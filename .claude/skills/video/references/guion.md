@@ -30,10 +30,10 @@ Su manera de contar nunca pasa por encima de `viral.md`.
   contexto: qué otras opciones hay, quién las controla o fabrica, de dónde vienen, qué límites tienen. Se cuentan en lenguaje
   natural, con fuente fiable y cifras en forma cualitativa si no están claras; van donde encajan en el hilo, sin cortarlo,
   y el vídeo crece lo que haga falta (ver Duración) para que nunca se quede estático.
-- **Duración (pedido del creador):** vale desde un minuto largo hasta unos dos minutos si hace falta para que se entienda
-  el concepto entero. Mejor completo y fácil que corto y a medias: añade los detalles que cierran la historia (el porqué,
-  cómo se corrige, qué lo limita), con fuentes fiables y en el mismo tono sencillo. Cada frase añadida se ve y avanza;
-  no se rellena.
+- **Duración (pedido del creador):** menos de 90 s (minuto y medio; Instagram no admite reels de más; `montar.mjs` y `entregar.mjs` fallan a partir de 90 s). Busca la
+  información más interesante que quepa en ese tiempo y **cuenta la historia cerrada**: lo que abre el hook se contesta
+  y se remata dentro del mismo vídeo, nunca a medias ni «en el próximo». Si no cabe, recorta detalles curiosos o contexto,
+  nunca el final. Con fuentes fiables y en el mismo tono sencillo. Cada frase añadida se ve y avanza; no se rellena.
 
 - Escribe el final justo después del hook: la frase que contesta su pregunta y le da la vuelta. El cuerpo es el camino
   de uno a otro.
@@ -94,6 +94,9 @@ alcance («en EE. UU.», «según la propia empresa»). Lo que dice un vídeo de
 - `subtitulos`: `arriba` (lo de siempre), `abajo` o `no`, como la referencia si la hay.
 - El cuerpo es el mismo para todas las aperturas: su primera frase tiene que seguir bien a cada hook.
 - `pie.txt`: el texto del post. La primera línea engancha; sin hashtags ni rayas largas; el valor va en el texto.
+- `hashtags.txt`: una sola línea con 8 a 12 hashtags en español, de lo más amplio a lo más concreto del tema (dos o tres
+  grandes como #ciencia o #curiosidades, el resto del tema). Van en el primer comentario de Instagram, no en el pie.
+  `entregar.mjs` lo copia a `trabajo/salida/<proyecto>/`.
 
 ## Antes de enseñarlo
 

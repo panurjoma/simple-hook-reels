@@ -2,3 +2,4 @@
 node_modules/
 trabajo/*
 herramientas/modelos/
+.playwright-mcp/

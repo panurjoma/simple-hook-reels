@@ -45,8 +45,9 @@ quita, solo si el creador lo pide.
 **Curiosidades y contexto:** además de explicar, cada vídeo da detalles técnicos curiosos y pone el tema en contexto (otras
 opciones, quién las controla, límites), en lenguaje natural y con fuente (`references/guion.md`).
 
-**Duración:** hasta un minuto largo o unos dos minutos si hace falta para que el concepto se entienda entero; mejor completo
-y sencillo que corto y a medias (`references/guion.md`).
+**Duración:** menos de 90 s (minuto y medio) por reel, el límite para compartirlo como reel o short (`montar.mjs` y `entregar.mjs` fallan a partir de 90 s). Dentro de ese tiempo, elige lo
+más interesante del tema y cuéntalo **cerrado**: con principio, desarrollo y final, nunca a medias ni dejando algo para
+«otro vídeo». Si no cabe entero, recorta detalles, no el final (`references/guion.md`).
 
 ## Portadas (todos los vídeos, estilo de la portada del GPS)
 
@@ -54,6 +55,24 @@ Toda portada se hace a propósito para llamar la atención, no es un frame suelt
 grandes (la 2.ª en dorado) arriba, un frame 3D debajo y Pablo abajo a la izquierda. El título es una definición clave que
 engancha. Cada proyecto lleva `portada.json` (`{"lineas":[3 líneas],"segundo":1}`); `entregar.mjs` la genera con
 `herramientas/portada.mjs` y falla si falta. Modelo: `trabajo/salida/2026-11-02-gps-sin-cobertura-pablo/portada-h1.jpg`.
+
+## Publicar (dos pipelines aparte, solo si el creador lo pide)
+
+Publicar es un paso aparte, posterior al vídeo: o **Instagram** o **YouTube**, cada uno con su conector. Parte siempre
+del vídeo de salida identificado en `trabajo/salida/<proyecto>/` (`<nombre>-h1.mp4`, `caption.txt`, `portada-h1.jpg`).
+Se genera un solo vídeo por proyecto, con las medidas de Instagram Reels, que valen también para YouTube Shorts (9:16, 1080x1920, H.264/AAC 48 kHz, 60 fps, ≤300 MB, moov al principio, GOP cerrado); `entregar.mjs` lo reencoda y las comprueba.
+
+- **Instagram:** conector `fase-cero-instagram` (`instagram_publicar_reel`): `archivo` = el mp4 de salida, `texto` =
+  `caption.txt`, `portada` = `portada-h1.jpg` (la misma portada del proyecto, nunca un frame: se pasa a JPG, se sube
+  a `fase-zero-assets` y va como `cover_url`) y `comentario` = `hashtags.txt` (los hashtags van en el primer comentario).
+  Público al momento. Cuenta: `instagram_cuenta`. Fotos: `instagram_publicar_foto` con `archivo` local (se convierte a
+  JPG y se sube a `fase-zero-assets`; Instagram la lee desde esa URL) y `comentario` para hashtags.
+- **API de Facebook/Instagram:** cada vez que haya que consultar cómo usarla, parte de
+  https://developers.facebook.com/documentation/development/
+- **YouTube:** conector `fase-cero-youtube` (`youtube_subir`, `youtube_miniatura`): el mp4, título y descripción de
+  `caption.txt`, la portada como miniatura; en privado salvo que diga otra cosa.
+- Solo en el momento en que lo pida, y diciendo en cuál. Si no dice en cuál, pregunta. Antes de elegir hook o subir,
+  lee `trabajo/registro.md`.
 
 ## La carpeta
 
@@ -64,6 +83,7 @@ estanteria/     vídeos que ya funcionaron, plano a plano: cada vídeo nuevo cop
 plantilla/      el esqueleto de una escena, el kit de movimiento y el aspecto de la casa (estilo.css)
 sonidos/        los efectos de sonido aprobados de oído (LEEME.md)
 trabajo/
+  registro.md       lo que ha fallado y funcionado, para no repetir errores (se lee antes de decidir)
   preferencias.md   lo que vale para todos sus vídeos (idioma, público, cierre, estilo), con sus palabras
   proyectos/        un vídeo por carpeta, con su guion, su voz, sus escenas y sus notas
   salida/           los vídeos terminados, con sus portadas y el texto del post
@@ -93,9 +113,13 @@ trabajo/
 - El creador autoriza los subagentes `revisor-veracidad-guion`, `revisor-lenguaje`, `revisor-hook` y
   `revisor-veracidad-imagen` para las revisiones indicadas; se ejecutan en secuencia. Para otros
   subagentes o trabajo en paralelo, pregúntale antes.
-- Nunca publiques ni envíes nada en su nombre.
+- Nunca publiques ni envíes nada en su nombre. Los conectores `fase-cero-youtube` y `fase-cero-instagram` (`node herramientas/youtube-auth.mjs` / `instagram-auth.mjs`)
+  solo publican si el creador lo pide en ese momento, tras enseñarle vídeo, texto y portada; YouTube siempre en privado salvo que diga otra cosa.
 - Cada vídeo sale de su referencia y de esta carpeta: no abras ni copies otros proyectos de `trabajo/proyectos/`,
   salvo que el creador te pida cambiar uno de ellos.
-- No guardes memorias sobre cómo hacer vídeos. Lo que el creador quiere para siempre va a `trabajo/preferencias.md`,
-  con sus palabras; tus conclusiones no son preferencias suyas.
+- Memoria del ciclo: `trabajo/registro.md` (texto plano) guarda lo que ha fallado y lo que ha funcionado. Léelo **antes
+  de decidir** (tema, estructura, hook, escenas, entrega y publicar): lo que ya falló no se repite y lo que funcionó se
+  copia. Actualízalo al terminar cada etapa importante y cuando el creador cuente un resultado. Es el único sitio para
+  eso: no uses tu memoria personal. Lo que el creador quiere para siempre va a `trabajo/preferencias.md`, con sus
+  palabras; tus conclusiones no son preferencias suyas.
 - Corto y claro en todo lo que le escribas. Una frase donde iban dos.

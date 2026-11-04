@@ -15,6 +15,12 @@
       "args": [
         "herramientas/youtube-mcp.mjs"
       ]
+    },
+    "fase-cero-instagram": {
+      "command": "node",
+      "args": [
+        "herramientas/instagram-mcp.mjs"
+      ]
     }
   }
 }

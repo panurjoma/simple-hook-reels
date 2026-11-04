@@ -18,6 +18,13 @@ explicación.
    `estanteria/` que mejor encaje con cómo se explica el tema (`estanteria/LEEME.md`). De él salen los planos, el
    aspecto, el ritmo y cómo se mueve (`references/referencia.md`). Nunca se inventa el aspecto de un vídeo.
 
+## Registro (antes de decidir y al terminar)
+
+`trabajo/registro.md` es la memoria plana del ciclo: lo que ha fallado (no se repite) y lo que ha funcionado (se copia),
+con el resultado real que cuente el creador. **Léelo al empezar cada vídeo** y antes de decidir el tema y la estructura,
+el hook, las escenas, la entrega y cualquier publicación. **Actualízalo** al cerrar el guion, tras las revisiones, al
+entregar y cada vez que el creador cuente un resultado. Una línea por hecho, con fecha y proyecto; solo hechos.
+
 ## Antes del primer vídeo
 
 1. `node herramientas/doctor.mjs`. Lo que falte, lo instalas tú. Nunca le pidas al creador que ejecute nada.
@@ -36,6 +43,7 @@ interactivo. Si el creador pide ver algo antes, se para ahí.
 
 | # | Etapa | Qué sale | Cómo |
 |---|---|---|---|
+| 0 | Registro | lo aprendido, aplicado | lee `trabajo/registro.md` |
 | 1 | Proyecto | `trabajo/proyectos/<fecha>-<slug>/` | `node herramientas/nuevo.mjs "<tema>"` |
 | 2 | Investigación | `investigacion.md`: cada dato con su fuente y la frase exacta, comprobado hoy | tú, en la web |
 | 3 | Referencia, siempre | `referencia/`: el vídeo, sus medidas, sus hojas y `referencia.md`, plano a plano | `node herramientas/referencia.mjs <enlace o archivo> --proyecto <proyecto>`, o `--estanteria <nombre>`; `references/referencia.md` |
@@ -46,7 +54,7 @@ interactivo. Si el creador pide ver algo antes, se para ahí.
 | 8 | El resto | todas las escenas, igual de fieles a la referencia | `references/escenas.md` |
 | 9 | Sonido, si lo quiso | `sonidos.json` y los efectos, como mucho cuatro, cada uno de algo que se ve | `node herramientas/sonido.mjs <proyecto>` |
 | 10 | Revisión | nada fuera de la zona segura y sus hojas miradas al lado de la referencia, tres pasadas | `node herramientas/revisar.mjs <proyecto>` |
-| 11 | Entrega | el vídeo en `trabajo/salida/<proyecto>/` con su portada (estilo GPS, de `portada.json`: título hook en 3 líneas, la 2.ª en dorado, Pablo abajo a la izquierda; nunca un frame suelto) y `caption.txt`; la ruta, en el chat | `node herramientas/entregar.mjs <proyecto>` |
+| 11 | Entrega | el vídeo en `trabajo/salida/<proyecto>/` (un solo mp4, medidas de Reels que valen para Shorts: 9:16 1080x1920 60 fps) con su portada (estilo GPS, de `portada.json`: título hook en 3 líneas, la 2.ª en dorado, Pablo abajo a la izquierda; nunca un frame suelto) y `caption.txt`; la ruta, en el chat | `node herramientas/entregar.mjs <proyecto>` |
 
 Cada herramienta dice cómo se usa con `--ayuda`; no leas su código. Si algo no funciona en esta máquina, arréglalo y
 apúntalo en una línea en `trabajo/maquina.md`; léelo antes de cada vídeo.
@@ -83,7 +91,7 @@ siguiendo `.claude/agents/revisor-veracidad-imagen.md` y anótalo.
 Si el creador trae su propio texto, ese es el guion: no lo reescribas ni le quites datos; solo avisa si algo parece
 falso. Si trae un vídeo, esa es la referencia.
 
-Al entregar, en una línea: si quiere otra versión con uno de los hooks de reserva, que te lo diga; y que el siguiente
+Al entregar, apunta en `trabajo/registro.md` lo que falló y lo que funcionó en este vídeo y, en una línea: si quiere otra versión con uno de los hooks de reserva, que te lo diga; y que el siguiente
 vídeo lo pida en una conversación nueva.
 
 ## Reglas de la casa

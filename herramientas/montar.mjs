@@ -16,7 +16,7 @@
 import { execFileSync } from "node:child_process";
 import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { RAIZ, aperturas, clave, fallo, ffmpeg, leerJson, posicional, proyecto, r3, tiene } from "./_comun.mjs";
+import { DURACION_MAX, RAIZ, aperturas, clave, fallo, ffmpeg, leerJson, posicional, proyecto, r3, tiene } from "./_comun.mjs";
 
 const { dir, guion } = proyecto(posicional());
 export const ENCADENADO = 0.3;
@@ -47,6 +47,7 @@ export function montar(dir, guion, ap) {
   catch { for (const d of ["compositions", "index.html", "voz.wav", "tramos.json", "recursos", "sonidos"]) rmSync(join(out, d), { recursive: true, force: true }); }
   mkdirSync(join(out, "compositions"), { recursive: true });
 
+  if (voz.duracion >= DURACION_MAX) fallo(`${ap.id}: la voz dura ${voz.duracion} s y el máximo es ${DURACION_MAX} s (minuto y medio, límite de los reels). Recorta el guion a lo más interesante, sin dejar la historia a medias, y vuelve a grabar la voz.`);
   // Escenas en orden, con su tramo.
   const tramos = [];
   for (const f of voz.frases) {

@@ -8,6 +8,8 @@ import { fileURLToPath } from "node:url";
 export const RAIZ = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 export const HF = "hyperframes@0.8.167"; // versión fija: el mismo vídeo sale igual hoy y dentro de un año
 export const WIN = process.platform === "win32";
+// Pedido del creador: ningún reel llega a 90 s (minuto y medio: más no se comparte como reel), y la historia se cuenta entera dentro de ese tiempo.
+export const DURACION_MAX = 90;
 
 // La zona segura de un reel de 1080 × 1920: lo que Instagram no tapa. Arriba, su barra; abajo, el nombre, el texto y
 // la música; a la derecha, la columna de botones (desde y = 1050). Lo mismo que K.SEGURA en plantilla/kit.js.
