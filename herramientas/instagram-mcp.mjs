@@ -9,6 +9,7 @@ import { basename, join, resolve } from "node:path";
 import { createInterface } from "node:readline";
 import { RAIZ, ffm } from "./_comun.mjs";
 import { VER, credenciales, ig } from "./_instagram.mjs";
+import { marcarPorArchivo } from "./estado.mjs";
 
 const ruta = (p) => { const r = resolve(RAIZ, p); if (!existsSync(r)) throw new Error(`no existe ${r}`); return r; };
 const espera = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -65,6 +66,7 @@ const TOOLS = [
       if (estado.status_code !== "FINISHED") throw new Error("Instagram sigue procesando; vuelve a probar publicar con id " + c.id);
       const p = await ig("POST", `${uid()}/media_publish`, { form: { creation_id: c.id } });
       const m = await ig("GET", p.id, { query: { fields: "permalink" } });
+      if (a.archivo) marcarPorArchivo(ruta(a.archivo), "instagram", { id: p.id, enlace: m.permalink });
       return { id: p.id, enlace: m.permalink, ...(await comentar(p.id, a.comentario)) };
     } },
   { name: "instagram_publicar_foto", description: "Publica una foto YA (visible para todos). Úsalo solo si el creador lo ha pedido ahora mismo. Instagram solo acepta una URL pública de un JPG: con `archivo` (cualquier imagen local) la herramienta la convierte a JPG, la sube al repo público de assets de GitHub y publica desde esa URL.",

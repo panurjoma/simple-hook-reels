@@ -3,12 +3,13 @@
   <head><meta charset="UTF-8" /></head>
   <body>
     <!--
-      Pablo, el profesor del canal: un chico de unos 30 años, camiseta burdeos, pantalón negro, aire surfero (castaño, moreno, gorra y gafas de sol de espejo azul), de cuerpo entero y
+      Pablo, el profesor del canal: un chico de unos 30 años, camiseta de color vivo (distinto en cada vídeo, al azar), pantalón negro, aire surfero (castaño, moreno, gorra y gafas de sol de espejo azul), de cuerpo entero y
       pequeño, abajo a la izquierda en TODOS los vídeos. montar.mjs lo copia a compositions/profesor.html y cambia:
         __BOCA__    cuánto abre la boca en cada fotograma a 30 por segundo (0 a 1), sacado de la propia voz
         __GESTOS__  los segundos en que dice una palabra clave (asiente, levanta las cejas y señala)
         __HOOK__    el segundo en que acaba el hook (la pregunta); hasta ahí, cejas arriba
         __DURACION__ lo que dura el vídeo
+        __CAMISA_CLARO__ / __CAMISA_OSCURO__  el color vivo de su camiseta en este vídeo (montar.mjs lo elige al azar y lo guarda en pablo.json)
       Su sitio es K.PERSONAJE (x 65 a 285, y 1090 a 1440). Las escenas no ponen nada importante ahí.
     -->
     <template>
@@ -21,7 +22,7 @@
           <defs>
             <linearGradient id="pablo-piel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c4875a" /><stop offset="1" stop-color="#98623f" /></linearGradient>
             <linearGradient id="pablo-piel2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#b27650" /><stop offset="1" stop-color="#85553a" /></linearGradient>
-            <linearGradient id="pablo-camisa" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8c2a3a" /><stop offset="1" stop-color="#4e1020" /></linearGradient>
+            <linearGradient id="pablo-camisa" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="__CAMISA_CLARO__" /><stop offset="1" stop-color="__CAMISA_OSCURO__" /></linearGradient>
             <linearGradient id="pablo-bañador" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#24272e" /><stop offset="1" stop-color="#0a0b0e" /></linearGradient>
             <linearGradient id="pablo-pelo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a5a38" /><stop offset="0.55" stop-color="#5e3a22" /><stop offset="1" stop-color="#3d2415" /></linearGradient>
             <radialGradient id="pablo-suelo" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#000" stop-opacity="0.5" /><stop offset="1" stop-color="#000" stop-opacity="0" /></radialGradient>

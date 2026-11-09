@@ -25,6 +25,10 @@ con el resultado real que cuente el creador. **Léelo al empezar cada vídeo** y
 el hook, las escenas, la entrega y cualquier publicación. **Actualízalo** al cerrar el guion, tras las revisiones, al
 entregar y cada vez que el creador cuente un resultado. Una línea por hecho, con fecha y proyecto; solo hechos.
 
+`trabajo/bitacora.md` es la memoria automática (hechos y errores de las herramientas) y cada vídeo entregado tiene
+`estado.json` (subido o no en YouTube e Instagram; métricas más adelante). Antes de elegir tema, hook o público, lanza
+`node herramientas/estado.mjs` y léelo junto al registro. Pablo cambia de camiseta (color vivo al azar) en cada vídeo.
+
 ## Antes del primer vídeo
 
 1. `node herramientas/doctor.mjs`. Lo que falte, lo instalas tú. Nunca le pidas al creador que ejecute nada.

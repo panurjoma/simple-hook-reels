@@ -16,7 +16,7 @@
 import { execFileSync } from "node:child_process";
 import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { DURACION_MAX, RAIZ, aperturas, clave, fallo, ffmpeg, leerJson, posicional, proyecto, r3, tiene } from "./_comun.mjs";
+import { DURACION_MAX, RAIZ, aperturas, camisetaDe, clave, fallo, ffmpeg, leerJson, posicional, proyecto, r3, tiene } from "./_comun.mjs";
 
 const { dir, guion } = proyecto(posicional());
 export const ENCADENADO = 0.3;
@@ -108,7 +108,9 @@ export function montar(dir, guion, ap) {
     const nHook = voz.frases.filter((f) => f.parte === "hook").length;
     const hook = r3(voz.frases[Math.max(0, nHook - 1)]?.fin ?? 0);
     const gestos = voz.palabras.filter((w) => w.clave).map((w) => r3(w.inicio));
+    const camisa = camisetaDe(dir, guion);
     writeFileSync(join(out, "compositions", "profesor.html"), readFileSync(join(RAIZ, "plantilla", "profesor.html"), "utf8")
+      .replaceAll("__CAMISA_CLARO__", camisa.claro).replaceAll("__CAMISA_OSCURO__", camisa.oscuro)
       .replaceAll("__BOCA__", JSON.stringify(bocaDe(join(dir, "voz", `${ap.id}.wav`), voz.duracion)))
       .replaceAll("__GESTOS__", JSON.stringify(gestos)).replaceAll("__HOOK__", String(hook)).replaceAll("__DURACION__", String(voz.duracion)));
   }

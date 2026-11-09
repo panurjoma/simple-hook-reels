@@ -8,10 +8,13 @@
 import { execFileSync } from "node:child_process";
 import { copyFileSync, existsSync, mkdirSync, readFileSync, renameSync, rmSync, statSync } from "node:fs";
 import { basename, join } from "node:path";
-import { DURACION_MAX, RAIZ, aperturas, duracion, fallo, ffm, ffprobe, hyperframes, posicional, proyecto, r3, resumen, tiene } from "./_comun.mjs";
+import { DURACION_MAX, RAIZ, aperturas, bitacora, camisetaDe, duracion, fallo, ffm, ffprobe, hyperframes, posicional, proyecto, r3, resumen, tiene } from "./_comun.mjs";
 import { montar } from "./montar.mjs";
 import { portada } from "./portada.mjs";
 import { datos, referenciaDe } from "./medir.mjs";
+import { iniciarEstado } from "./estado.mjs";
+
+process.env.PROYECTO_ACTUAL = process.argv.slice(2).find((a) => !a.startsWith("--")) ? basename(process.argv.slice(2).find((a) => !a.startsWith("--"))) : "";
 
 const { dir, guion } = proyecto(posicional());
 const nombre = basename(dir);
@@ -48,6 +51,9 @@ for (const ap of aperturas(guion)) {
   const pj = portada(dir, ap.id);
   if (!pj) fallo(`${ap.id}: falta portada.json (3 líneas de título hook, la 2.ª en dorado); la portada no es un frame suelto`);
   hechos.push(mp4, pj);
+  // Ficha local del vídeo: dónde está subido (por ahora solo sí/no) y, más adelante, sus métricas. Nunca pisa lo ya subido.
+  iniciarEstado(nombre, { [`video_${ap.id}`]: basename(mp4), duracion: r3(d), hook: (ap.frases || []).map((f) => f.texto).join(" ") || null, camiseta: camisetaDe(dir, guion).nombre, entregado: new Date().toISOString() });
+  bitacora("ENTREGADO", nombre, `${basename(mp4)} · ${r3(d)} s · camiseta ${camisetaDe(dir, guion).nombre}`);
 }
 if (existsSync(join(dir, "pie.txt"))) { copyFileSync(join(dir, "pie.txt"), join(salida, "caption.txt")); hechos.push(join(salida, "caption.txt")); }
 else console.log("aviso: no hay pie.txt; el texto del post falta");

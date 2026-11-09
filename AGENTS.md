@@ -32,7 +32,7 @@ solo.
 ## Pablo, el profesor (en todos los vídeos)
 
 Cada vídeo lleva a Pablo: un muñeco pequeño de cuerpo entero, chico de unos 30 años, moreno (piel de chocolate con leche),
-pelo castaño corto, gorra gris y gafas de sol de espejo azul (basado en la cara del creador), camiseta burdeos y pantalón
+pelo castaño corto, gorra gris y gafas de sol de espejo azul (basado en la cara del creador), camiseta de un color vivo distinto en cada vídeo (al azar, `montar.mjs` lo elige y lo guarda en `pablo.json`; `"camiseta": "rojo"` en `guion.json` lo fuerza) y pantalón
 negro, abajo a la izquierda pero no pegado al borde (`K.PERSONAJE`: x 65 a 285, y 1090 a 1440), moviendo todo el cuerpo
 como un profesor. Es la voz del vídeo: voz masculina de España, no demasiado grave (`voz.edge` en `guion.json`, edge-tts, una sola toma).
 Lo monta `montar.mjs` solo (`plantilla/profesor.html`); su boca sigue la voz. Todas las escenas son en 3D (`kit3d.js`,
@@ -52,7 +52,7 @@ más interesante del tema y cuéntalo **cerrado**: con principio, desarrollo y f
 ## Portadas (todos los vídeos, estilo de la portada del GPS)
 
 Toda portada se hace a propósito para llamar la atención, no es un frame suelto del vídeo: título hook en tres líneas
-grandes (la 2.ª en dorado) arriba, un frame 3D debajo y Pablo abajo a la izquierda. El título es una definición clave que
+grandes (la 2.ª en dorado/amarillo; se mantiene así por ahora) arriba, un frame 3D debajo y Pablo abajo a la izquierda. El título es una definición clave que
 engancha. Cada proyecto lleva `portada.json` (`{"lineas":[3 líneas],"segundo":1}`); `entregar.mjs` la genera con
 `herramientas/portada.mjs` y falla si falta. Modelo: `trabajo/salida/2026-11-02-gps-sin-cobertura-pablo/portada-h1.jpg`.
 
@@ -73,6 +73,18 @@ Se genera un solo vídeo por proyecto, con las medidas de Instagram Reels, que v
   `caption.txt`, la portada como miniatura; en privado salvo que diga otra cosa.
 - Solo en el momento en que lo pida, y diciendo en cuál. Si no dice en cuál, pregunta. Antes de elegir hook o subir,
   lee `trabajo/registro.md`.
+
+## Memoria y estado de cada vídeo
+
+- `trabajo/bitacora.md` (texto plano, automática): las herramientas anotan solas cada hecho (camiseta, entrega, subida) y
+  **cada error** (`ERROR`). Léela antes de decidir y, si algo falla, anota tú la causa y el arreglo en `registro.md`.
+  Lo que hagas a mano y no pase por una herramienta, apúntalo tú en `registro.md`. Más adelante se clasificará.
+- `trabajo/salida/<proyecto>/estado.json` (lo crea `entregar.mjs`): por vídeo, `youtube` e `instagram` con `subido`
+  (sí/no), enlace, id, fecha y `metricas` (vacías por ahora; luego se rellenan con las de cada plataforma para saber qué
+  hooks, temas y públicos funcionan y apuntar los siguientes vídeos en esa dirección). Los conectores marcan `subido` solos al
+  publicar; a mano: `node herramientas/estado.mjs <proyecto> youtube|instagram subido|no-subido`. Sin argumentos lista todos.
+- Antes de elegir tema, hook o público, y antes de publicar, mira `node herramientas/estado.mjs` (qué está ya subido y dónde)
+  y `registro.md`.
 
 ## La carpeta
 

@@ -94,8 +94,11 @@ alcance («en EE. UU.», «según la propia empresa»). Lo que dice un vídeo de
 - `subtitulos`: `arriba` (lo de siempre), `abajo` o `no`, como la referencia si la hay.
 - El cuerpo es el mismo para todas las aperturas: su primera frase tiene que seguir bien a cada hook.
 - `pie.txt`: el texto del post. La primera línea engancha; sin hashtags ni rayas largas; el valor va en el texto.
-- `hashtags.txt`: una sola línea con 8 a 12 hashtags en español, de lo más amplio a lo más concreto del tema (dos o tres
-  grandes como #ciencia o #curiosidades, el resto del tema). Van en el primer comentario de Instagram, no en el pie.
+- `hashtags.txt`: una sola línea con 18 a 24 hashtags (Instagram admite 30), mitad en español y mitad en inglés para
+  llegar a más gente: unos 10 a 12 en español y 8 a 10 en inglés (los mismos temas, no traducciones forzadas), de lo más
+  amplio a lo más concreto (tres o cuatro grandes por idioma, como #ciencia #curiosidades / #science #didyouknow, y el
+  resto del tema, p. ej. #aviacion / #aviation). Sin repetir, sin espacios ni tildes dentro. Van en el primer comentario
+  de Instagram, no en el pie.
   `entregar.mjs` lo copia a `trabajo/salida/<proyecto>/`.
 
 ## Antes de enseñarlo

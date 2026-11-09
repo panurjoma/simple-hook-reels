@@ -6,6 +6,7 @@ import { existsSync, readFileSync, statSync } from "node:fs";
 import { basename, extname, resolve } from "node:path";
 import { createInterface } from "node:readline";
 import { RAIZ } from "./_comun.mjs";
+import { marcarPorArchivo } from "./estado.mjs";
 import { yt } from "./_youtube.mjs";
 
 const ruta = (p) => { const r = resolve(RAIZ, p); if (!existsSync(r)) throw new Error(`no existe ${r}`); return r; };
@@ -35,6 +36,7 @@ const TOOLS = [
       const put = await fetch(ini.headers.get("location"), { method: "PUT", headers: { "content-type": mime(f), "content-length": String(bytes.length) }, body: bytes });
       const j = await put.json();
       if (!put.ok) throw new Error(`YouTube ${put.status}: ${j.error?.message || JSON.stringify(j).slice(0, 300)}`);
+      marcarPorArchivo(f, "youtube", { id: j.id, enlace: `https://youtu.be/${j.id}`, privacidad: j.status?.privacyStatus });
       return { id: j.id, privacidad: j.status?.privacyStatus, enlace: `https://youtu.be/${j.id}`, nota: "Sube en privado hasta que el creador diga lo contrario." };
     } },
   { name: "youtube_actualizar_video", description: "Cambia título, descripción, etiquetas o privacidad de un vídeo. Solo cambia lo que se pasa.",
