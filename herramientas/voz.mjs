@@ -96,7 +96,11 @@ function piper(texto, salida) {
 // Voz neuronal de España (edge-tts, es-ES-AlvaroNeural) con los tiempos exactos de cada palabra. voz.edge = { voz, ritmo, tono }.
 function edge(texto, salida) {
   const E = V.edge, mp3 = salida.replace(/\.wav$/, ".mp3"), js = salida.replace(/\.wav$/, ".edge.json");
-  const r = spawnSync("python", [fileURLToPath(new URL("./edge-voz.py", import.meta.url)), E.voz || "es-ES-AlvaroNeural", E.ritmo || "-8%", E.tono || "+0Hz", mp3, js], { input: texto, encoding: "utf8" });
+  let r;
+  for (let intento = 0; intento < 5; intento++) { // el servicio de edge-tts falla a veces sin motivo: se reintenta
+    r = spawnSync("python", [fileURLToPath(new URL("./edge-voz.py", import.meta.url)), E.voz || "es-ES-AlvaroNeural", E.ritmo || "-8%", E.tono || "+0Hz", mp3, js], { input: texto, encoding: "utf8" });
+    if (r.status === 0 && existsSync(mp3)) break;
+  }
   if (r.status !== 0 || !existsSync(mp3)) fallo(`edge-tts no pudo hablar (¿falta python -m pip install edge-tts o internet?): ${(r.stderr || "").slice(-400)}`);
   ffm(["-i", mp3, "-ar", "44100", "-ac", "1", salida]);
   return leerJson(js);

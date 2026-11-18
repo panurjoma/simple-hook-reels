@@ -11,6 +11,9 @@ solo.
   ya haya una, y pregunta lo de las preferencias (skill
   `video`, «Antes del primer vídeo»). Luego di en una línea que ya puede pedir un vídeo, por ejemplo «Hazme un vídeo
   sobre por qué el cielo es azul».
+- Si el creador no dice de qué hacer el vídeo, o pide ideas o temas («propón», «qué vídeo hacemos»): llama una sola vez al
+  agente `catedratico-temas` (`.claude/agents/catedratico-temas.md`), enseña sus cinco propuestas y que él elija. En
+  automatizado, toma la que él recomiende. Al elegir, pasa el tema de «Propuestos» a «Hechos» en `trabajo/temas.md` al entregar.
 - Cualquier petición de vídeo, reel, guion, hooks, ideas para vídeos o recrear un reel: sigue la skill `video`
   (`.claude/skills/video/SKILL.md`; la misma en `.agents/skills/video/`). Léela entera una vez antes de empezar, con
   sus `references/` cuando la etapa lo diga.
@@ -56,6 +59,14 @@ grandes (la 2.ª en dorado/amarillo; se mantiene así por ahora) arriba, un fram
 engancha. Cada proyecto lleva `portada.json` (`{"lineas":[3 líneas],"segundo":1}`); `entregar.mjs` la genera con
 `herramientas/portada.mjs` y falla si falta. Modelo: `trabajo/salida/2026-11-02-gps-sin-cobertura-pablo/portada-h1.jpg`.
 
+## Dos versiones de cada vídeo (español e inglés)
+
+Todo reel se crea en **español y en inglés**, con las mismas escenas: voz, subtítulos, rótulos, portada, `caption.txt` y
+hashtags en cada idioma. Primero se entrega el español (como siempre); después, sin esperar aprobaciones, la versión
+`<proyecto>-en` siguiendo `.claude/skills/video/references/ingles.md` (herramientas `ingles-crear`, `ingles-senales`,
+`ingles-rotulos`). Las dos duran menos de 90 s y salen en `trabajo/salida/<proyecto>/` y `trabajo/salida/<proyecto>-en/`.
+La versión inglesa parte siempre del mismo vídeo: copia del proyecto español, mismas escenas y frames, solo cambian voz, subtítulos y rótulos. Los revisores solo se llaman en la versión española. Publicar sigue siendo aparte.
+
 ## Publicar (dos pipelines aparte, solo si el creador lo pide)
 
 Publicar es un paso aparte, posterior al vídeo: o **Instagram** o **YouTube**, cada uno con su conector. Parte siempre
@@ -89,7 +100,7 @@ Se genera un solo vídeo por proyecto, con las medidas de Instagram Reels, que v
 ## La carpeta
 
 ```
-herramientas/   los pasos fijos: nuevo, referencia, guion, voz, sonido, montar, revisar, portada, entregar, doctor, clave
+herramientas/   los pasos fijos: nuevo, referencia, guion, voz, sonido, montar, revisar, portada, entregar, ingles-*, doctor, clave
                 (cada una dice cómo se usa con --ayuda)
 estanteria/     vídeos que ya funcionaron, plano a plano: cada vídeo nuevo copia la forma de uno (LEEME.md)
 plantilla/      el esqueleto de una escena, el kit de movimiento y el aspecto de la casa (estilo.css)
@@ -122,8 +133,8 @@ trabajo/
   cuidando de su casa, y dice si se imagina y entiende lo que se explica o qué palabras y frases simplificar. Aplica una
   ronda de sus cambios sin tocar datos ni cifras, anótalo en `notas.md` y no vuelvas a llamarlo. Si no se puede lanzar
   el agente, haz tú esa revisión una sola vez y anótalo.
-- El creador autoriza los subagentes `revisor-veracidad-guion`, `revisor-lenguaje`, `revisor-hook` y
-  `revisor-veracidad-imagen` para las revisiones indicadas; se ejecutan en secuencia. Para otros
+- El creador autoriza los subagentes `revisor-veracidad-guion`, `revisor-lenguaje`, `revisor-hook`,
+  `revisor-veracidad-imagen` y `catedratico-temas` (propone temas nuevos) para lo indicado; se ejecutan en secuencia. Para otros
   subagentes o trabajo en paralelo, pregúntale antes.
 - Nunca publiques ni envíes nada en su nombre. Los conectores `fase-cero-youtube` y `fase-cero-instagram` (`node herramientas/youtube-auth.mjs` / `instagram-auth.mjs`)
   solo publican si el creador lo pide en ese momento, tras enseñarle vídeo, texto y portada; YouTube siempre en privado salvo que diga otra cosa.

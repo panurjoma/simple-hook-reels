@@ -48,6 +48,7 @@ interactivo. Si el creador pide ver algo antes, se para ahí.
 | # | Etapa | Qué sale | Cómo |
 |---|---|---|---|
 | 0 | Registro | lo aprendido, aplicado | lee `trabajo/registro.md` |
+| 0b | Tema, si no lo hay | cinco propuestas de temas nunca tratados (hook, qué se ve, curiosidad) y el creador elige; `trabajo/temas.md` al día | `.claude/agents/catedratico-temas.md`, una sola vez |
 | 1 | Proyecto | `trabajo/proyectos/<fecha>-<slug>/` | `node herramientas/nuevo.mjs "<tema>"` |
 | 2 | Investigación | `investigacion.md`: cada dato con su fuente y la frase exacta, comprobado hoy | tú, en la web |
 | 3 | Referencia, siempre | `referencia/`: el vídeo, sus medidas, sus hojas y `referencia.md`, plano a plano | `node herramientas/referencia.mjs <enlace o archivo> --proyecto <proyecto>`, o `--estanteria <nombre>`; `references/referencia.md` |
@@ -59,6 +60,7 @@ interactivo. Si el creador pide ver algo antes, se para ahí.
 | 9 | Sonido, si lo quiso | `sonidos.json` y los efectos, como mucho cuatro, cada uno de algo que se ve | `node herramientas/sonido.mjs <proyecto>` |
 | 10 | Revisión | nada fuera de la zona segura y sus hojas miradas al lado de la referencia, tres pasadas | `node herramientas/revisar.mjs <proyecto>` |
 | 11 | Entrega | el vídeo en `trabajo/salida/<proyecto>/` (un solo mp4, medidas de Reels que valen para Shorts: 9:16 1080x1920 60 fps) con su portada (estilo GPS, de `portada.json`: título hook en 3 líneas, la 2.ª en dorado, Pablo abajo a la izquierda; nunca un frame suelto) y `caption.txt`; la ruta, en el chat | `node herramientas/entregar.mjs <proyecto>` |
+| 12 | Versión en inglés, siempre | `<proyecto>-en`: mismas escenas, voz, subtítulos y rótulos en inglés (portada, `caption.txt` y hashtags también); se hace con el vídeo en español ya entregado y sin aprobaciones extra | `references/ingles.md` |
 
 Cada herramienta dice cómo se usa con `--ayuda`; no leas su código. Si algo no funciona en esta máquina, arréglalo y
 apúntalo en una línea en `trabajo/maquina.md`; léelo antes de cada vídeo.
@@ -95,13 +97,15 @@ siguiendo `.claude/agents/revisor-veracidad-imagen.md` y anótalo.
 Si el creador trae su propio texto, ese es el guion: no lo reescribas ni le quites datos; solo avisa si algo parece
 falso. Si trae un vídeo, esa es la referencia.
 
+Cada vídeo se entrega en dos versiones, español e inglés (etapa 12, `references/ingles.md`); el inglés no lleva revisores nuevos.
+
 Al entregar, apunta en `trabajo/registro.md` lo que falló y lo que funcionó en este vídeo y, en una línea: si quiere otra versión con uno de los hooks de reserva, que te lo diga; y que el siguiente
 vídeo lo pida en una conversación nueva.
 
 ## Reglas de la casa
 
-- El creador autoriza `revisor-veracidad-guion`, `revisor-lenguaje`, `revisor-hook` y `revisor-veracidad-imagen` para
-  sus revisiones, en secuencia; para otros subagentes o trabajo en paralelo,
+- El creador autoriza `revisor-veracidad-guion`, `revisor-lenguaje`, `revisor-hook`, `revisor-veracidad-imagen` y
+  `catedratico-temas` (propone temas) para lo indicado, en secuencia; para otros subagentes o trabajo en paralelo,
   pregúntale antes.
 - Nunca publiques ni envíes nada en su nombre.
 - Corto y claro en todo lo que escribas al creador.
