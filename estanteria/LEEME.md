@@ -23,3 +23,4 @@ que hay que enseñar es lo que pasa por debajo de una pantalla.
   medidas, sus hojas y su `referencia.md` en `referencia/` del proyecto.
 - Si ninguno encaja con cómo se explica el tema, díselo al creador en una línea, pídele un reel que le guste y, si no
   tiene, usa el más cercano.
+- Candidatas aeroespaciales sin medir (motor a reacción, GPS, onda de choque, álgebra visual): `candidatas.md`.

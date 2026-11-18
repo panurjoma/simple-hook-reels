@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <!--
+      Pablo, el profesor del canal: un chico de unos 30 años, camiseta de color vivo (distinto en cada vídeo, al azar), pantalón negro, aire surfero (castaño, moreno, gorra y gafas de sol de espejo azul), de cuerpo entero y
+      pequeño, abajo a la izquierda en TODOS los vídeos. montar.mjs lo copia a compositions/profesor.html y cambia:
+        __BOCA__    cuánto abre la boca en cada fotograma a 30 por segundo (0 a 1), sacado de la propia voz
+        __GESTOS__  los segundos en que dice una palabra clave (asiente, levanta las cejas y señala)
+        __HOOK__    el segundo en que acaba el hook (la pregunta); hasta ahí, cejas arriba
+        __DURACION__ lo que dura el vídeo
+        __CAMISA_CLARO__ / __CAMISA_OSCURO__  el color vivo de su camiseta en este vídeo (montar.mjs lo elige al azar y lo guarda en pablo.json)
+      Su sitio es K.PERSONAJE (x 65 a 285, y 1090 a 1440). Las escenas no ponen nada importante ahí.
+    -->
+    <template>
+      <style>
+        #root { position: absolute; inset: 0; pointer-events: none; }
+        #pablo { position: absolute; left: 65px; top: 1090px; width: 220px; height: 350px; overflow: visible; }
+      </style>
+      <div id="root" data-composition-id="profesor" data-start="0" data-duration="__DURACION__" data-width="1080" data-height="1920">
+        <svg id="pablo" viewBox="0 0 220 350" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="pablo-piel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c4875a" /><stop offset="1" stop-color="#98623f" /></linearGradient>
+            <linearGradient id="pablo-piel2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#b27650" /><stop offset="1" stop-color="#85553a" /></linearGradient>
+            <linearGradient id="pablo-camisa" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="__CAMISA_CLARO__" /><stop offset="1" stop-color="__CAMISA_OSCURO__" /></linearGradient>
+            <linearGradient id="pablo-bañador" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#24272e" /><stop offset="1" stop-color="#0a0b0e" /></linearGradient>
+            <linearGradient id="pablo-pelo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a5a38" /><stop offset="0.55" stop-color="#5e3a22" /><stop offset="1" stop-color="#3d2415" /></linearGradient>
+            <radialGradient id="pablo-suelo" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#000" stop-opacity="0.5" /><stop offset="1" stop-color="#000" stop-opacity="0" /></radialGradient>
+            <clipPath id="pablo-boca-clip"><ellipse id="pablo-boca-forma" cx="110" cy="82" rx="8" ry="2" /></clipPath>
+          </defs>
+
+          <ellipse cx="110" cy="338" rx="70" ry="9" fill="url(#pablo-suelo)" />
+
+          <g id="pablo-cuerpo">
+            <!-- piernas y pies descalzos -->
+            <g id="pablo-piernas">
+              <path d="M76 250 L96 250 L94 322 C94 328 78 328 77 322 Z" fill="#15171c" />
+              <path d="M114 250 L152 250 L148 322 L117 322 Z" fill="#15171c" />
+              <ellipse cx="82" cy="332" rx="17" ry="8" fill="#e8e6e0" /><ellipse cx="138" cy="332" rx="17" ry="8" fill="#e8e6e0" />
+              <path d="M70 331 C76 326 90 326 98 331" stroke="#9a9890" stroke-width="2" fill="none" />
+              <path d="M126 331 C132 326 146 326 152 331" stroke="#9a9890" stroke-width="2" fill="none" />
+            </g>
+            <!-- bañador de surf -->
+            <path d="M64 196 L156 196 L158 256 L110 256 L62 256 Z" fill="url(#pablo-bañador)" />
+            <path d="M64 196 L156 196" stroke="#4a4e57" stroke-width="2" opacity="0.6" />
+            <path d="M62 236 L110 238 L158 236" stroke="#3a3d45" stroke-width="3" fill="none" opacity="0.9" />
+            <!-- camiseta -->
+            <path d="M68 112 C78 104 96 104 110 108 C124 104 142 104 152 112 L158 202 C130 210 90 210 62 202 Z" fill="url(#pablo-camisa)" />
+            <path d="M96 106 C102 124 118 124 124 106" fill="#c9b99a" stroke="#b9805a" stroke-width="2" />
+            <path d="M78 150 C100 160 120 160 142 150" stroke="#cfe3f7" stroke-width="3" fill="none" opacity="0.35" />
+            <!-- collar de concha -->
+            <path d="M92 112 C100 140 120 140 128 112" stroke="#2a1a12" stroke-width="2" fill="none" />
+            <path d="M107 136 C104 144 116 144 113 136 Z" fill="#6aa58a" stroke="#2a4a3a" stroke-width="1.5" />
+
+            <!-- brazo izquierdo (el de la izquierda de la imagen), suelto -->
+            <g id="pablo-brazo-i">
+              <path d="M70 114 C58 118 54 130 56 152 L76 154 C78 138 78 124 80 116 Z" fill="url(#pablo-camisa)" />
+              <path d="M57 150 L75 152 L72 196 C72 204 58 204 58 196 Z" fill="url(#pablo-piel2)" />
+              <ellipse cx="65" cy="204" rx="10" ry="11" fill="#a8704a" />
+            </g>
+            <!-- brazo derecho: el que explica, con antebrazo -->
+            <g id="pablo-brazo-d">
+              <path d="M150 114 C162 118 166 130 164 152 L144 154 C142 138 142 124 140 116 Z" fill="url(#pablo-camisa)" />
+              <g id="pablo-antebrazo">
+                <path d="M145 150 L163 152 L162 196 C162 204 148 204 148 196 Z" fill="url(#pablo-piel2)" />
+                <ellipse cx="155" cy="204" rx="10" ry="11" fill="#a8704a" />
+              </g>
+            </g>
+          </g>
+
+          <g id="pablo-cabeza">
+            <!-- pelo de atrás: corto -->
+            <path d="M80 52 C78 36 94 26 110 26 C128 26 142 36 140 52 C142 62 142 70 138 74 C134 66 130 62 126 60 L94 60 C90 62 86 66 82 74 C78 70 78 62 80 52 Z" fill="url(#pablo-pelo)" />
+            <!-- cuello -->
+            <path d="M99 88 L99 108 C99 114 121 114 121 108 L121 88 Z" fill="#b9805a" />
+            <!-- orejas -->
+            <ellipse cx="79" cy="68" rx="5" ry="9" fill="#a8704a" /><ellipse cx="141" cy="68" rx="5" ry="9" fill="#a8704a" />
+            <!-- cara -->
+            <path d="M110 30 C86 30 80 50 80 66 C80 86 94 100 110 100 C126 100 140 86 140 66 C140 50 134 30 110 30 Z" fill="url(#pablo-piel)" />
+            <path d="M84 76 C90 98 100 102 110 102 C120 102 130 98 136 76 C128 92 120 96 110 96 C100 96 92 92 84 76 Z" fill="#2a1a12" opacity="0.4" />
+            <!-- rizos bajo la gorra y patillas -->
+            <path d="M82 50 C84 44 92 42 100 44 C96 50 90 52 86 58 C83 58 81 54 82 50 Z M138 50 C136 44 128 42 120 44 C124 50 130 52 134 58 C137 58 139 54 138 50 Z" fill="url(#pablo-pelo)" />
+            <path d="M80 56 C77 64 78 74 81 80 C84 72 84 64 85 58 Z M140 56 C143 64 142 74 139 80 C136 72 136 64 135 58 Z" fill="#5e3a22" />
+            <!-- gorra gris -->
+            <path d="M78 52 C78 28 94 18 110 18 C126 18 142 28 142 52 C130 44 90 44 78 52 Z" fill="#6f7277" />
+            <path d="M110 18 L110 46" stroke="#55585d" stroke-width="2" />
+            <path d="M84 50 C100 40 122 40 140 48 C150 50 152 56 144 56 C128 52 100 52 82 56 C76 56 78 52 84 50 Z" fill="#55585d" />
+            <!-- cejas -->
+            <g id="pablo-cejas">
+              <path id="pablo-ceja-i" d="M91 54 C96 50 103 50 106 53" stroke="#4a2c1a" stroke-width="3.2" stroke-linecap="round" fill="none" />
+              <path id="pablo-ceja-d" d="M114 53 C117 50 124 50 129 54" stroke="#4a2c1a" stroke-width="3.2" stroke-linecap="round" fill="none" />
+            </g>
+            <!-- ojos -->
+            <g id="pablo-ojos" opacity="0">
+              <g id="pablo-ojo-i"><ellipse cx="98" cy="64" rx="7" ry="5.2" fill="#f4f1ea" /><circle id="pablo-pupila-i" cx="98.6" cy="64" r="3.2" fill="#2d6a7a" /><circle cx="99.5" cy="62.8" r="1.1" fill="#fff" /></g>
+              <g id="pablo-ojo-d"><ellipse cx="122" cy="64" rx="7" ry="5.2" fill="#f4f1ea" /><circle id="pablo-pupila-d" cx="122.6" cy="64" r="3.2" fill="#2d6a7a" /><circle cx="123.5" cy="62.8" r="1.1" fill="#fff" /></g>
+            </g>
+            <!-- gafas de sol de espejo azul -->
+            <defs><linearGradient id="pablo-lente" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4fa6ff" /><stop offset="1" stop-color="#0a3d9c" /></linearGradient></defs>
+            <path d="M86 58 L134 58 C136 58 137 60 136 62 C134 72 128 74 122 74 C114 74 112 68 110 64 C108 68 106 74 98 74 C92 74 86 72 84 62 C83 60 84 58 86 58 Z" fill="url(#pablo-lente)" stroke="#0b0f18" stroke-width="2.4" />
+            <path d="M90 61 L100 61 M114 61 L124 61" stroke="#bfe0ff" stroke-width="2" opacity="0.7" stroke-linecap="round" />
+            <!-- nariz, pecas y bronceado -->
+            <path d="M110 66 C108 73 106 77 105 79 C108 81 113 81 115 79" stroke="#a9724e" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+            <g fill="#85553a" opacity="0"><circle cx="95" cy="75" r="1" /><circle cx="100" cy="77" r="1" /><circle cx="120" cy="77" r="1" /><circle cx="125" cy="75" r="1" /></g>
+            <!-- boca -->
+            <g id="pablo-boca">
+              <path id="pablo-sonrisa" d="M101 82 C106 88 115 88 120 80" stroke="#8a4a3e" stroke-width="2.6" fill="none" stroke-linecap="round" />
+              <ellipse id="pablo-boca-dentro" cx="110" cy="82" rx="8" ry="2" fill="#2a0f12" />
+              <g clip-path="url(#pablo-boca-clip)">
+                <rect id="pablo-dientes" x="100" y="75" width="20" height="4" fill="#f3f1ec" />
+                <ellipse id="pablo-lengua" cx="110" cy="90" rx="6" ry="3" fill="#a8504f" />
+              </g>
+            </g>
+            <ellipse cx="90" cy="76" rx="8" ry="5" fill="#d9826f" opacity="0.16" /><ellipse cx="130" cy="76" rx="8" ry="5" fill="#d9826f" opacity="0.16" />
+          </g>
+        </svg>
+      </div>
+      <script>
+        (function () {
+          var BOCA = __BOCA__, GESTOS = __GESTOS__, HOOK = __HOOK__, D = __DURACION__;
+          var tl = gsap.timeline({ paused: true });
+          var $ = function (id) { return document.getElementById(id); };
+          var cabeza = $("pablo-cabeza"), cuerpo = $("pablo-cuerpo"), forma = $("pablo-boca-forma"), dentro = $("pablo-boca-dentro");
+          var dientes = $("pablo-dientes"), lengua = $("pablo-lengua"), sonrisa = $("pablo-sonrisa");
+          var ojoI = $("pablo-ojo-i"), ojoD = $("pablo-ojo-d"), cejaI = $("pablo-ceja-i"), cejaD = $("pablo-ceja-d");
+          var pupI = $("pablo-pupila-i"), pupD = $("pablo-pupila-d"), brazoI = $("pablo-brazo-i"), brazoD = $("pablo-brazo-d"), antebrazo = $("pablo-antebrazo");
+          var azar = K.azar(11), parpadeos = [], tp = 1.1;
+          while (tp < D) { parpadeos.push(tp); tp += 2.4 + azar() * 2.6; }
+          var energia = 0;
+
+          function f(t) {
+            // Boca: la apertura de la voz en este fotograma, suavizada entre muestras.
+            var x = t * 30, i = Math.min(BOCA.length - 1, Math.floor(x)), j = Math.min(BOCA.length - 1, i + 1);
+            var a = BOCA[i] + (BOCA[j] - BOCA[i]) * (x - i);
+            var ry = 1.4 + 9 * a, rx = 8 - 1.4 * a, cy = 81 + ry * 0.5;
+            [forma, dentro].forEach(function (e) { e.setAttribute("ry", ry.toFixed(2)); e.setAttribute("rx", rx.toFixed(2)); e.setAttribute("cy", cy.toFixed(2)); });
+            dientes.setAttribute("y", (cy - ry).toFixed(2)); dientes.setAttribute("height", Math.min(4, ry * 0.5).toFixed(2));
+            lengua.setAttribute("cy", (cy + ry * 0.9).toFixed(2));
+            sonrisa.setAttribute("opacity", a < 0.06 ? 1 : 0);
+            dentro.setAttribute("opacity", a < 0.06 ? 0 : 1);
+
+            // Asentir y cejas en las palabras clave; en ellas, además, señala. Hook: cejas arriba.
+            var nod = 0, ceja = t < HOOK ? 0.65 : 0, senala = 0;
+            for (var g = 0; g < GESTOS.length; g++) {
+              var u = t - GESTOS[g];
+              if (u > -0.05 && u < 0.7) { var s = Math.sin(Math.min(1, (u + 0.05) / 0.75) * Math.PI); nod = Math.max(nod, s); ceja = Math.max(ceja, s * 0.8); }
+              if (u > -0.3 && u < 1.1) senala = Math.max(senala, Math.sin(Math.min(1, (u + 0.3) / 1.4) * Math.PI));
+            }
+            energia += (a - energia) * 0.25; // la voz, suavizada: lo que mueve las manos al hablar
+            var balanceo = Math.sin(t * 1.3) * 1.6 + Math.sin(t * 0.7 + 1) * 1.1;
+            var giro = balanceo * 0.7 + (t < HOOK ? -2.2 : 0) + nod * -2;
+            cabeza.style.transformOrigin = "110px 104px";
+            cabeza.style.transform = "translate(" + (Math.sin(t * 0.9) * 1.2).toFixed(2) + "px," + (nod * 3 + a * 1.1 - Math.sin(t * 2.1) * 0.6).toFixed(2) + "px) rotate(" + giro.toFixed(2) + "deg)";
+            // El cuerpo cambia el peso de un pie al otro y respira.
+            cuerpo.style.transformOrigin = "110px 335px";
+            cuerpo.style.transform = "rotate(" + (Math.sin(t * 0.8) * 0.9).toFixed(2) + "deg) scale(1," + (1 + Math.sin(t * 1.8) * 0.006).toFixed(4) + ")";
+            // Brazos: el derecho explica, abierto y con la mano que sube en lo importante; el izquierdo, suelto.
+            var abre = 18 + 14 * energia * 2 + 26 * senala + Math.sin(t * 2.6) * 5 * energia * 2;
+            brazoD.style.transformOrigin = "150px 116px";
+            brazoD.style.transform = "rotate(" + (-abre).toFixed(2) + "deg)";
+            antebrazo.style.transformOrigin = "154px 150px";
+            antebrazo.style.transform = "rotate(" + (35 + 45 * senala + 30 * energia + Math.sin(t * 3.1) * 6 * energia * 2).toFixed(2) + "deg)";
+            brazoI.style.transformOrigin = "70px 116px";
+            brazoI.style.transform = "rotate(" + (Math.sin(t * 0.9 + 1) * 3 + 4 + 8 * energia).toFixed(2) + "deg)";
+            var dy = -ceja * 5;
+            cejaI.style.transformOrigin = "98px 52px"; cejaD.style.transformOrigin = "122px 52px";
+            cejaI.style.transform = "translateY(" + dy.toFixed(2) + "px) rotate(" + (-ceja * 4).toFixed(2) + "deg)";
+            cejaD.style.transform = "translateY(" + (dy - ceja).toFixed(2) + "px) rotate(" + (ceja * 4).toFixed(2) + "deg)";
+
+            // Parpadeo y mirada.
+            var cierra = 1;
+            for (var p = 0; p < parpadeos.length; p++) {
+              var v = t - parpadeos[p];
+              if (v >= 0 && v < 0.16) cierra = Math.min(cierra, 0.08 + Math.abs(v - 0.08) / 0.08 * 0.92);
+            }
+            ojoI.style.transformOrigin = "98px 64px"; ojoD.style.transformOrigin = "122px 64px";
+            ojoI.style.transform = ojoD.style.transform = "scale(1," + cierra.toFixed(3) + ")";
+            var mx = Math.sin(t * 0.5) * 1.1, my = Math.sin(t * 0.37 + 2) * 0.6;
+            pupI.setAttribute("cx", (98.6 + mx).toFixed(2)); pupD.setAttribute("cx", (122.6 + mx).toFixed(2));
+            pupI.setAttribute("cy", (64 + my).toFixed(2)); pupD.setAttribute("cy", (64 + my).toFixed(2));
+          }
+          K.reloj(tl, D, f);
+          tl.to({}, { duration: D }, 0);
+          window.__timelines["profesor"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

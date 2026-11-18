@@ -1,0 +1,29 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;width:2560px;height:1440px;overflow:hidden;background:#060a12;font-family:"Segoe UI","Figtree",Arial,sans-serif}
+#t{position:absolute;left:640px;top:490px;color:#f2f5f9}
+#t h1{margin:0;font-size:215px;line-height:1;font-weight:700;letter-spacing:22px;text-transform:uppercase}
+#t p{margin:18px 0 0 8px;font-size:54px;letter-spacing:4px;color:#8fa0b5}
+#t h2{margin:6px 0 0 10px;font-size:84px;line-height:1;font-weight:600;letter-spacing:46px;text-transform:uppercase;color:#3f86c7}
+#t b{color:#cfe3f7;font-weight:600}
+</style></head><body>
+<svg width="2560" height="1440" viewBox="0 0 2560 1440" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+<defs>
+<radialGradient id="bg" cx="35%" cy="50%" r="80%"><stop offset="0" stop-color="#14203a"/><stop offset="1" stop-color="#060a12"/></radialGradient>
+<linearGradient id="w" x1="0" x2="1"><stop offset="0" stop-color="#3f86c7" stop-opacity="0"/><stop offset=".25" stop-color="#cfe3f7" stop-opacity=".9"/><stop offset="1" stop-color="#3f86c7" stop-opacity="0"/></linearGradient>
+<radialGradient id="g"><stop offset="0" stop-color="#cfe3f7" stop-opacity=".95"/><stop offset="1" stop-color="#3f86c7" stop-opacity="0"/></radialGradient>
+<pattern id="gr" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="#96afd2" stroke-opacity=".05" stroke-width="2"/></pattern>
+</defs>
+<rect width="2560" height="1440" fill="url(#bg)"/><rect width="2560" height="1440" fill="url(#gr)"/>
+<line x1="0" y1="720" x2="2560" y2="720" stroke="#8fa0b5" stroke-opacity=".18" stroke-width="3"/>
+<mask id="m"><rect width="2560" height="1440" fill="#fff"/><rect x="610" y="440" width="1500" height="560" fill="#000" fill-opacity="0.82"/></mask><g mask="url(#m)"><path id="p1" fill="none" stroke="url(#w)" stroke-width="10" stroke-linecap="round"/><path id="p2" fill="none" stroke="#3f86c7" stroke-opacity=".28" stroke-width="5" stroke-linecap="round"/></g>
+<circle cx="560" cy="720" r="120" fill="url(#g)"/>
+<circle cx="560" cy="720" r="34" fill="#f2f5f9"/>
+<circle cx="560" cy="720" r="82" fill="none" stroke="#8fa0b5" stroke-opacity=".6" stroke-width="5"/>
+</svg>
+<div id="t"><h1>Fase Zero</h1><h2>Science</h2><p>Aeroespacial y matemáticas, <b>entendidas de verdad</b></p></div>
+<script>
+// Ondas con fase cero en el origen (560, 720); la grande atraviesa todo el banner, la tenue es el eco (otra amplitud)
+function seno(A,L,y0,x0){let d="";for(let x=0;x<=2560;x+=6){const y=y0-A*Math.sin((x-x0)/L*2*Math.PI);d+=(d?"L":"M")+x+" "+y.toFixed(1)}return d}
+document.getElementById("p1").setAttribute("d",seno(210,1400,720,560));
+document.getElementById("p2").setAttribute("d",seno(110,700,720,560));
+</script></body></html>

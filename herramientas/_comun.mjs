@@ -1,17 +1,21 @@
 // Lo que comparten todas las herramientas: rutas, ejecutar programas, ffmpeg, HyperFrames y las claves.
 import { execFileSync, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { appendFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 export const RAIZ = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 export const HF = "hyperframes@0.8.167"; // versión fija: el mismo vídeo sale igual hoy y dentro de un año
 export const WIN = process.platform === "win32";
+// Pedido del creador: ningún reel llega a 90 s (minuto y medio: más no se comparte como reel), y la historia se cuenta entera dentro de ese tiempo.
+export const DURACION_MAX = 90;
 
 // La zona segura de un reel de 1080 × 1920: lo que Instagram no tapa. Arriba, su barra; abajo, el nombre, el texto y
 // la música; a la derecha, la columna de botones (desde y = 1050). Lo mismo que K.SEGURA en plantilla/kit.js.
 export const SEGURA = { izq: 65, der: 1015, arriba: 270, abajo: 1440, botones: { x: 950, y: 1050 } };
+// Donde está Pablo, el profesor del canal, en todos los vídeos: nada importante de la escena va ahí.
+export const PERSONAJE = { izq: 65, der: 285, arriba: 1090, abajo: 1440 };
 
 // --ayuda en cualquier herramienta: imprime su cabecera, que dice cómo se usa, y sale. Así nadie tiene que leer el
 // código para usarla.
@@ -44,7 +48,23 @@ export const posicional = (n = 0) => {
 export const leerJson = (f, def) => (existsSync(f) ? JSON.parse(readFileSync(f, "utf8")) : def);
 export const escribirJson = (f, v) => { mkdirSync(dirname(f), { recursive: true }); writeFileSync(f, JSON.stringify(v, null, 2) + "\n"); };
 export const r3 = (x) => Math.round(x * 1000) / 1000;
-export const fallo = (msg) => { console.error(`error: ${msg}`); process.exit(1); };
+// Bitácora: memoria plana y automática de todo lo que hacen las herramientas (trabajo/bitacora.md). Una línea por hecho.
+// Los errores van marcados con ERROR para poder buscarlos. registro.md sigue siendo lo curado a mano (lecciones).
+export function bitacora(tipo, proyecto, texto) {
+  try {
+    const f = join(RAIZ, "trabajo", "bitacora.md");
+    mkdirSync(dirname(f), { recursive: true });
+    if (!existsSync(f)) writeFileSync(f, "# Bitácora (automática)\n\nFormato: `AAAA-MM-DD HH:MM · TIPO · proyecto · hecho`. Los fallos llevan ERROR.\n\n");
+    const t = new Date(), p2 = (n) => String(n).padStart(2, "0");
+    const cuando = `${t.getFullYear()}-${p2(t.getMonth() + 1)}-${p2(t.getDate())} ${p2(t.getHours())}:${p2(t.getMinutes())}`;
+    appendFileSync(f, `${cuando} · ${tipo} · ${proyecto || "general"} · ${String(texto).replace(/\s*\n\s*/g, " ").slice(0, 600)}\n`);
+  } catch {}
+}
+export const fallo = (msg) => {
+  console.error(`error: ${msg}`);
+  bitacora("ERROR", process.env.PROYECTO_ACTUAL || (process.argv[1] ? process.argv[1].split(/[\/]/).pop() : ""), msg);
+  process.exit(1);
+};
 
 // Las claves del comprador viven en .env.local, en la raíz. Nunca se piden en el chat (herramientas/clave.mjs).
 export function cargarClaves() {
@@ -72,9 +92,32 @@ export function duracion(f) {
 // HyperFrames por npx, con la versión fija. En Windows npx es un .cmd: va con shell y cada argumento entre comillas.
 // La salida se guarda y no se imprime: quien llama enseña resumen(r) solo si algo falla.
 export function hyperframes(args, { cwd = RAIZ } = {}) {
-  const npx = WIN ? "npx.cmd" : "npx";
   // HF_WORKERS limita los procesos de render (máquinas con poca memoria gráfica y escenas 3D pesadas)
   const extra = args[0] === "render" && process.env.HF_WORKERS ? ["--workers", process.env.HF_WORKERS] : [];
+  // El render va primero en CPU; solo si falla y hay una NVIDIA, se repite con la GPU (codificación y captura de
+  // Chrome). Con la GPU por delante salió más lento y con un archivo mayor (ver trabajo/maquina.md). HF_GPU=0 quita
+  // el reintento con GPU.
+  // HF_GPU_PRIMERO=1: la GPU desde el primer intento (poca RAM y escenas 3D pesadas).
+  if (args[0] === "render" && process.env.HF_GPU_PRIMERO === "1" && hayGpu() && !args.includes("--gpu")) {
+    const g = ejecutar([...args, "--gpu", "--browser-gpu"], extra, cwd);
+    if (g.ok) return g;
+  }
+  const r = ejecutar(args, extra, cwd);
+  if (r.ok || args[0] !== "render" || args.includes("--gpu") || !hayGpu()) return r;
+  return ejecutar([...args, "--gpu", "--browser-gpu"], extra, cwd);
+}
+
+let _gpu;
+function hayGpu() {
+  if (_gpu === undefined) {
+    _gpu = process.env.HF_GPU !== "0" && spawnSync("nvidia-smi", ["-L"], { stdio: "ignore" }).status === 0;
+  }
+  return _gpu;
+}
+
+function ejecutar(args, extra, cwd) {
+  const npx = WIN ? "npx.cmd" : "npx";
+  extra = [...extra];
   // HF_CHECK_TIMEOUT da más tiempo a check para que carguen las escenas 3D pesadas (ms)
   if (args[0] === "check" && process.env.HF_CHECK_TIMEOUT) extra.push("--timeout", process.env.HF_CHECK_TIMEOUT);
   // HF_CHECK_SAMPLES limita las muestras de check y quita el contraste (un lienzo 3D no tiene texto que medir)
@@ -138,3 +181,22 @@ export const firmaVoz = (guion, ap) => createHash("sha1")
 // Palabras para el subtítulo y las marcas de tiempo: se quitan signos y se pasa a minúsculas sin tildes.
 export const palabras = (t) => String(t).split(/\s+/).filter(Boolean);
 export const clave = (w) => String(w).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9ñ%.,]/g, "").replace(/[.,]+$/g, "");
+
+// Camiseta de Pablo: un color vivo al azar por vídeo (claro → oscuro para el degradado). Se elige una vez y queda en
+// <proyecto>/pablo.json, así volver a montar o entregar no la cambia. guion.json → "camiseta": "rojo" la fuerza.
+export const CAMISETAS = {
+  rojo: ["#ff3b3b", "#b3121f"], naranja: ["#ff8a1f", "#c4560a"], verde: ["#2ed16b", "#12853f"], turquesa: ["#19d3c5", "#0c8a86"],
+  azul: ["#2f8bff", "#1450b8"], violeta: ["#9b5cff", "#5b27b5"], rosa: ["#ff4fa3", "#b3256f"], lima: ["#a6e22e", "#5f9a12"],
+};
+export function camisetaDe(dir, guion = {}) {
+  const f = join(dir, "pablo.json");
+  let c = leerJson(f, null);
+  const nombre = guion.camiseta && CAMISETAS[guion.camiseta] ? guion.camiseta : null;
+  if (!c || (nombre && c.nombre !== nombre)) {
+    const n = nombre || Object.keys(CAMISETAS)[Math.floor(Math.random() * Object.keys(CAMISETAS).length)];
+    c = { nombre: n, claro: CAMISETAS[n][0], oscuro: CAMISETAS[n][1] };
+    escribirJson(f, c);
+    bitacora("CAMISETA", dir.split(/[\/]/).pop(), `Pablo lleva la camiseta ${n}`);
+  }
+  return c;
+}

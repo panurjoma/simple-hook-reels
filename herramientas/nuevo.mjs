@@ -17,7 +17,7 @@ mkdirSync(join(dir, "escenas"), { recursive: true });
 mkdirSync(join(dir, "recursos"), { recursive: true });
 escribirJson(join(dir, "guion.json"), {
   titulo: tema, slug, idioma: "es",
-  voz: { proveedor: "elevenlabs", id: "851ejYcv2BoNPjrkw93G", modelo: "eleven_v4", velocidad: 1, estabilidad: 0.35, similitud: 0.7, kokoro: "ef_dora" },
+  voz: { proveedor: "elevenlabs", id: "pNInz6obpgDQGcFmaJgB", modelo: "eleven_v4", velocidad: 1, estabilidad: 0.35, similitud: 0.7, kokoro: "em_alex" },
   subtitulos: "arriba",
   aperturas: [{ id: "h1", escena: "hook", frases: [{ texto: "", clave: "" }] }],
   reserva: [],

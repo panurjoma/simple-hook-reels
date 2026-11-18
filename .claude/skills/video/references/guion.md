@@ -25,6 +25,16 @@ Su manera de contar nunca pasa por encima de `viral.md`.
 
 ## El cuerpo
 
+- **Detalles curiosos y contexto (pedido del creador):** además de explicar cómo funciona, cada vídeo suelta detalles técnicos
+  curiosos que no son imprescindibles pero enganchan («hay unos treinta dando vueltas a la Tierra») y pone el tema en su
+  contexto: qué otras opciones hay, quién las controla o fabrica, de dónde vienen, qué límites tienen. Se cuentan en lenguaje
+  natural, con fuente fiable y cifras en forma cualitativa si no están claras; van donde encajan en el hilo, sin cortarlo,
+  y el vídeo crece lo que haga falta (ver Duración) para que nunca se quede estático.
+- **Duración (pedido del creador):** menos de 90 s (minuto y medio; Instagram no admite reels de más; `montar.mjs` y `entregar.mjs` fallan a partir de 90 s). Busca la
+  información más interesante que quepa en ese tiempo y **cuenta la historia cerrada**: lo que abre el hook se contesta
+  y se remata dentro del mismo vídeo, nunca a medias ni «en el próximo». Si no cabe, recorta detalles curiosos o contexto,
+  nunca el final. Con fuentes fiables y en el mismo tono sencillo. Cada frase añadida se ve y avanza; no se rellena.
+
 - Escribe el final justo después del hook: la frase que contesta su pregunta y le da la vuelta. El cuerpo es el camino
   de uno a otro.
 - La primera frase descarta lo que el espectador ya está pensando, o dice la pregunta en voz alta.
@@ -36,7 +46,18 @@ Su manera de contar nunca pasa por encima de `viral.md`.
 - La voz se graba de una toma, como habla una persona: no se estira para encajar en segundos fijos.
 - **Cierre:** el de `trabajo/preferencias.md`, tal cual.
 
+## Pablo habla
+
+La voz es la de Pablo, un profesor joven de unos 30 años. El guion lleva, en orden:
+1. **El hook:** una pregunta corta (`aperturas`), con las cinco pruebas de `viral.md`.
+2. **La explicación**, directa, sin presentarse ni decir su profesión (prohibido en todos los vídeos).
+3. **El cierre** de `trabajo/preferencias.md`.
+
 ## Los datos
+
+En lo que dice la voz y se ve en pantalla, lenguaje común y cualitativo, sin abusar de datos exactos: no «tres
+nanosegundos» ni «500 km/h» sino «un tiempo muy pequeño» o «una velocidad muy alta». El número exacto vive en
+`investigacion.md`; en el guion solo entra el que la idea necesita para entenderse, redondeado y con algo que se sienta.
 
 Cada cifra, nombre y fecha está en `investigacion.md` con su fuente y la frase exacta, comprobada hoy. Nunca inventes
 una cifra; si dudas, quítala y dilo. Redondea solo hacia lo honesto («unos», «más de» solo si es verdad) y conserva el
@@ -73,6 +94,12 @@ alcance («en EE. UU.», «según la propia empresa»). Lo que dice un vídeo de
 - `subtitulos`: `arriba` (lo de siempre), `abajo` o `no`, como la referencia si la hay.
 - El cuerpo es el mismo para todas las aperturas: su primera frase tiene que seguir bien a cada hook.
 - `pie.txt`: el texto del post. La primera línea engancha; sin hashtags ni rayas largas; el valor va en el texto.
+- `hashtags.txt`: una sola línea con 18 a 24 hashtags (Instagram admite 30), mitad en español y mitad en inglés para
+  llegar a más gente: unos 10 a 12 en español y 8 a 10 en inglés (los mismos temas, no traducciones forzadas), de lo más
+  amplio a lo más concreto (tres o cuatro grandes por idioma, como #ciencia #curiosidades / #science #didyouknow, y el
+  resto del tema, p. ej. #aviacion / #aviation). Sin repetir, sin espacios ni tildes dentro. Van en el primer comentario
+  de Instagram, no en el pie.
+  `entregar.mjs` lo copia a `trabajo/salida/<proyecto>/`.
 
 ## Antes de enseñarlo
 
@@ -81,7 +108,17 @@ alcance («en EE. UU.», «según la propia empresa»). Lo que dice un vídeo de
    trajo el creador, no se reescribe: solo se le avisa.
 2. Una pasada entera como alguien que pasa de largo (`viral.md`, «Antes de enseñar nada»): la frase en la que te irías
    o que un niño no entendería se reescribe en esa misma pasada.
-3. Enséñalo en el chat: el hook con lo que se verá en su primer segundo, el cuerpo y, debajo, los tres de reserva en
+3. Una vez por vídeo, llama a `revisor-veracidad-guion` (`.claude/agents/revisor-veracidad-guion.md`): busca en
+   fuentes fiables cada cifra, nombre, fecha y causa del guion y los traduce a lenguaje simple. Corrige o quita lo que
+   no confirme, pasa sus fuentes y frases exactas a `investigacion.md` y apunta las razones en `notas.md`. No lo
+   vuelvas a llamar. Si el texto lo trajo el creador, no se reescribe: solo se le avisa de lo que parece falso.
+4. Una vez por vídeo, y ya con los datos verificados, llama a `revisor-lenguaje` (`.claude/agents/revisor-lenguaje.md`): lee el guion como una madre de
+   45 años, versátil y sin formación técnica, y dice si se imagina y entiende lo que se explica o qué frases cambiar.
+   Aplica una ronda de sus cambios, sin tocar datos ni cifras de `investigacion.md`, apunta las razones en `notas.md` y
+   vuelve a pasar `guion.mjs`, sin volver a llamarlo. Si el texto lo trajo el creador, no se reescribe: solo se le
+   avisa de lo que no se entiende.
+5. En modo interactivo, enséñalo en el chat: el hook con lo que se verá en su primer segundo, el cuerpo y, debajo, los tres de reserva en
    una línea cada uno. Si la referencia es de la estantería, di en una línea cuál y por qué. En el mismo mensaje, dos
-   preguntas cortas: si lo aprueba, y si quiere efectos de sonido (recomienda que no: el mejor vídeo de la estantería
-   no lleva). Apunta la respuesta en `guion.json` como `"sonido": true` o `false`.
+   preguntas cortas: si lo aprueba, y si quiere efectos de sonido (el creador los quiere cuando encajen: propón los que ayudarían y dónde; si `sonidos/`
+   está vacío, dilo). Apunta la respuesta en `guion.json` como `"sonido": true` o `false`.
+   En modo automatizado, no esperes aprobación: continúa con el guion y apunta `"sonido": true` solo si hay sonidos aprobados en `sonidos/` que encajen, y `false` si no. Si el creador aportó el texto, consérvalo sin reescribir.

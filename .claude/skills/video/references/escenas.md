@@ -29,8 +29,19 @@ seguidas van en la misma escena mientras la referencia siga en el mismo sitio. L
 objeto, el sitio) se hace una vez en `recursos/mundo.js` y cada escena lo importa, para que sea siempre la misma cosa a
 la misma escala. Ese `mundo.js` es de este proyecto: no lo copies de otro.
 
+## Pablo, abajo a la izquierda
+
+Pablo (`plantilla/profesor.html`) está en todos los vídeos sobre las escenas, en `K.PERSONAJE` (x 65 a 425, y 1040 a
+1440). `montar.mjs` lo pone solo: su boca sigue la voz y asiente en las palabras clave. En las escenas, nada importante
+(etiquetas, cifras, la parte que se explica) entra en ese rectángulo; la cosa de la escena puede pasar por detrás.
+`plan.md` lo recuerda en una línea. La portada sale del vídeo (segundo 1), así que lleva a Pablo.
+
 ## Qué se dibuja
 
+- **Encuadre y detalle del canal:** alterna el conjunto con primeros planos de partes del objeto, con detalle real
+  suficiente para explicar la pieza o mecanismo. El objeto puede quedar parcialmente fuera del encuadre: no lo muestres
+  entero ni desde lejos en todos los planos. Mantén legibles y en zona segura las etiquetas y lo importante; anota en
+  `plan.md` el motivo de cada acercamiento y, si cambia el encuadre de la referencia, la razón en `notas.md`.
 - **La cosa real, al nivel de la referencia:** sus medidas reales (busca una foto o la ficha técnica), las interfaces
   con su texto real, y el mismo detalle y acabado que tiene la referencia, en su mismo estilo (plano, 3D o foto). Si
   algo parece un emoji, un icono genérico, un dibujo de libro infantil o una figura de juguete, se redibuja de verdad o

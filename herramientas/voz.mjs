@@ -16,25 +16,27 @@
 import { createHash } from "node:crypto";
 import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { spawnSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import { aperturas, arg, cargarClaves, clave, duracion, escribirJson, fallo, ffm, firmaVoz, hyperframes, leerJson, palabras, posicional, proyecto, r3, tiene } from "./_comun.mjs";
 
 cargarClaves();
 const { dir, guion } = proyecto(posicional());
 const V = guion.voz || {};
 const KEY = process.env.ELEVENLABS_API_KEY;
-const PROVEEDOR = tiene("kokoro") || V.proveedor === "kokoro" || !KEY ? "kokoro" : "elevenlabs";
+const PROVEEDOR = V.edge && !tiene("kokoro") ? "edge" : tiene("kokoro") || V.proveedor === "kokoro" || !KEY ? "kokoro" : "elevenlabs";
 const PAUSA = guion.pausa ?? 0.18; // pausa entre frases: corta, como habla alguien con prisa por contarlo
 const COLA = guion.cola ?? 0.8;
 const CACHE = join(dir, "voz", "cache");
 mkdirSync(CACHE, { recursive: true });
 
-if (PROVEEDOR === "kokoro" && V.proveedor !== "kokoro")
+if (PROVEEDOR === "kokoro" && !V.edge && V.proveedor !== "kokoro")
   console.log("voz: sin clave de ElevenLabs, va Kokoro en local. Para la voz buena, node herramientas/clave.mjs");
 
 // ---- una frase, una vez -------------------------------------------------------------------------------------
 
 async function elevenlabs(texto, antes, despues, salida) {
-  const id = V.id || "851ejYcv2BoNPjrkw93G";
+  const id = V.id || "pNInz6obpgDQGcFmaJgB";
   const cuerpo = {
     text: texto,
     model_id: V.modelo || "eleven_v4",
@@ -79,10 +81,36 @@ async function elevenlabs(texto, antes, despues, salida) {
   return ws;
 }
 
+// Voz de España en local (Piper, voz sharvard de hombre), con el tono subido. Se elige con voz.piper en guion.json:
+// { modelo, hablante, tono }. Los modelos viven en herramientas/modelos/ (.onnx y .onnx.json, de rhasspy/piper-voices).
+function piper(texto, salida) {
+  const P = V.piper, modelo = join(fileURLToPath(new URL("./modelos/", import.meta.url)), `${P.modelo || "es_ES-sharvard-medium"}.onnx`);
+  if (!existsSync(modelo)) fallo(`Falta el modelo de voz ${modelo}: descárgalo de huggingface.co/rhasspy/piper-voices (es/es_ES).`);
+  const bruto = salida.replace(/\.wav$/, ".piper.wav");
+  const r = spawnSync("python", ["-m", "piper", "-m", modelo, "-s", String(P.hablante ?? 0), "--length-scale", String(P.ritmo ?? 0.75), "-f", bruto], { input: texto, encoding: "utf8" });
+  if (r.status !== 0 || !existsSync(bruto)) fallo(`Piper no pudo hablar: ${(r.stderr || "").slice(-400)}`);
+  ffm(["-i", bruto, "-af", `rubberband=pitch=${P.tono ?? 1.25}:formant=preserved`, "-ar", "44100", "-ac", "1", salida]);
+  return null;
+}
+
+// Voz neuronal de España (edge-tts, es-ES-AlvaroNeural) con los tiempos exactos de cada palabra. voz.edge = { voz, ritmo, tono }.
+function edge(texto, salida) {
+  const E = V.edge, mp3 = salida.replace(/\.wav$/, ".mp3"), js = salida.replace(/\.wav$/, ".edge.json");
+  let r;
+  for (let intento = 0; intento < 5; intento++) { // el servicio de edge-tts falla a veces sin motivo: se reintenta
+    r = spawnSync("python", [fileURLToPath(new URL("./edge-voz.py", import.meta.url)), E.voz || "es-ES-AlvaroNeural", E.ritmo || "-8%", E.tono || "+0Hz", mp3, js], { input: texto, encoding: "utf8" });
+    if (r.status === 0 && existsSync(mp3)) break;
+  }
+  if (r.status !== 0 || !existsSync(mp3)) fallo(`edge-tts no pudo hablar (¿falta python -m pip install edge-tts o internet?): ${(r.stderr || "").slice(-400)}`);
+  ffm(["-i", mp3, "-ar", "44100", "-ac", "1", salida]);
+  return leerJson(js);
+}
+
 function kokoro(texto, salida) {
+  if (V.piper) return piper(texto, salida);
   const txt = salida.replace(/\.wav$/, ".txt");
   writeFileSync(txt, texto, "utf8");
-  const r = hyperframes(["tts", txt, "--voice", V.kokoro || "ef_dora", "--lang", guion.idioma || "es", "-o", salida, "--json"], { cwd: dir, json: true });
+  const r = hyperframes(["tts", txt, "--voice", V.kokoro || "em_alex", "--lang", guion.idioma || "es", "-o", salida, "--json"], { cwd: dir, json: true });
   if (!r.ok || !existsSync(salida)) fallo(`Kokoro no pudo hablar: ${(r.errores || r.salida).slice(-400)}`);
   return null; // los tiempos salen al transcribir la mezcla
 }
@@ -96,7 +124,7 @@ function recortar(src, dst) {
 
 async function frase(f, antes, despues) {
   const dicho = f.dicho || f.texto;
-  const ajustes = PROVEEDOR === "kokoro" ? ["k", V.kokoro || "ef_dora", guion.idioma] : ["e", V.id, V.modelo, V.estabilidad, V.similitud, V.estilo, V.velocidad];
+  const ajustes = PROVEEDOR === "kokoro" ? ["k", V.kokoro || "em_alex", guion.idioma, V.piper || null, V.edge || null] : ["e", V.id, V.modelo, V.estabilidad, V.similitud, V.estilo, V.velocidad];
   const h = createHash("sha1").update(JSON.stringify([ajustes, dicho])).digest("hex").slice(0, 12);
   const crudo = join(CACHE, `${h}.crudo.wav`), limpio = join(CACHE, `${h}.wav`), tiempos = join(CACHE, `${h}.json`);
   if (!existsSync(limpio) || tiene("rehacer")) {
@@ -128,9 +156,9 @@ function repartir(texto, oidas, inicio, fin) {
 // más de PAUSA se acorta a PAUSA (los del hook no se tocan) y los tiempos de cada palabra se corren lo mismo.
 async function tomaSeguida(ap, lista) {
   const dichos = lista.map((f) => String(f.dicho || f.texto).trim());
-  const h = createHash("sha1").update(JSON.stringify(["toma", V.id, V.modelo, V.estabilidad, V.similitud, V.estilo, V.velocidad, dichos])).digest("hex").slice(0, 12);
+  const h = createHash("sha1").update(JSON.stringify(["toma", V.edge || null, V.id, V.modelo, V.estabilidad, V.similitud, V.estilo, V.velocidad, dichos])).digest("hex").slice(0, 12);
   const crudo = join(CACHE, `${h}.toma.wav`), tiempos = join(CACHE, `${h}.toma.json`);
-  if (!existsSync(crudo) || tiene("rehacer")) escribirJson(tiempos, await elevenlabs(dichos.join(" "), null, null, crudo));
+  if (!existsSync(crudo) || tiene("rehacer")) escribirJson(tiempos, V.edge ? edge(dichos.join(" "), crudo) : await elevenlabs(dichos.join(" "), null, null, crudo));
   const ws = leerJson(tiempos);
   // Palabras de cada frase, por su número de palabras dichas.
   const porFrase = [];
@@ -181,7 +209,7 @@ for (const ap of aperturas(guion)) {
     ...ap.frases.map((f) => ({ ...f, escena: f.escena || ap.escena, parte: "hook" })),
     ...(guion.cuerpo || []).map((f) => ({ ...f, parte: "cuerpo" })),
   ];
-  if (PROVEEDOR === "elevenlabs") {
+  if (PROVEEDOR === "elevenlabs" || PROVEEDOR === "edge") {
     const { frases, wav } = await tomaSeguida(ap, lista);
     const total = r3(frases[frases.length - 1].fin + COLA);
     const salida = join(dir, "voz", `${ap.id}.wav`);

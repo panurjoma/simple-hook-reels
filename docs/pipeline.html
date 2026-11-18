@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pipeline de simple-hook-reels</title>
+<style>
+  :root{--bg:#0b0e13;--panel:#121722;--panel2:#171e2c;--line:#25304a;--tx:#e6ebf5;--mut:#8b97ad;--acc:#6aa3ff;--ok:#5fd0a0;--warn:#f0b35a;--bad:#ef6b7b;--ag:#b79bff}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,Segoe UI,sans-serif}
+  header{padding:18px 24px;border-bottom:1px solid var(--line);display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+  header h1{font-size:18px;margin:0;font-weight:600}
+  header .sp{flex:1}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .seg button{background:var(--panel);color:var(--mut);border:0;padding:7px 14px;cursor:pointer;font:inherit}
+  .seg button.on{background:var(--acc);color:#07101f;font-weight:600}
+  nav.tabs{display:flex;gap:4px;padding:10px 24px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+  nav.tabs button{background:none;border:0;color:var(--mut);padding:10px 14px;cursor:pointer;font:inherit;border-bottom:2px solid transparent}
+  nav.tabs button.on{color:var(--tx);border-color:var(--acc)}
+  main{display:none;padding:20px 24px;max-width:1400px;margin:auto}
+  main.on{display:block}
+  .layout{display:grid;grid-template-columns:300px 1fr;gap:20px}
+  @media(max-width:860px){.layout{grid-template-columns:1fr}}
+  .steps{display:flex;flex-direction:column;gap:6px}
+  .step{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;display:flex;gap:10px;align-items:flex-start}
+  .step:hover{border-color:var(--acc)}
+  .step.on{border-color:var(--acc);background:var(--panel2)}
+  .step .n{min-width:26px;height:26px;border-radius:50%;background:var(--line);display:grid;place-items:center;font-size:12px;font-weight:700}
+  .step.on .n{background:var(--acc);color:#07101f}
+  .step .t{font-weight:600;font-size:14px}
+  .step .s{color:var(--mut);font-size:12px}
+  .step .stop{margin-left:auto;font-size:11px;color:var(--warn);white-space:nowrap}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+  .card h2{margin:0 0 4px;font-size:20px}
+  .card h3{margin:18px 0 6px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+  .card p{margin:6px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:860px){.grid2{grid-template-columns:1fr}}
+  code{background:#0a0f19;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font:13px ui-monospace,Consolas,monospace;color:#bcd2ff}
+  ul{margin:6px 0;padding-left:20px}
+  li{margin:3px 0}
+  .tag{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12px;margin:2px 4px 2px 0;border:1px solid var(--line)}
+  .tag.script{color:var(--ok);border-color:#2c6b52}
+  .tag.llm{color:var(--ag);border-color:#5a4a99}
+  .tag.rev{color:var(--warn);border-color:#7d6130}
+  .tag.user{color:var(--acc);border-color:#2f5390}
+  .tag.ext{color:#f08fc0;border-color:#8a3f66}
+  .lim{border-left:3px solid var(--bad);padding:6px 12px;margin:8px 0;background:#1a1218;border-radius:0 8px 8px 0}
+  .ok{border-left:3px solid var(--ok);padding:6px 12px;margin:8px 0;background:#10201b;border-radius:0 8px 8px 0}
+  .prop{border-left:3px solid var(--acc);padding:6px 12px;margin:8px 0;background:#101a2c;border-radius:0 8px 8px 0}
+  .flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:10px 0}
+  .flow span{background:#0a0f19;border:1px solid var(--line);border-radius:8px;padding:5px 10px;font-size:13px}
+  .flow i{color:var(--mut);font-style:normal}
+  table{border-collapse:collapse;width:100%;font-size:14px}
+  th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{color:var(--mut);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+  .hide-auto{display:block}
+  body.auto .only-int{display:none}
+  body.int .only-auto{display:none}
+  .small{color:var(--mut);font-size:13px}
+  .note{color:var(--mut);font-size:12px;margin-top:20px}
+  .ctxrow{display:flex;gap:8px;flex-wrap:wrap}
+  .ctxbtn{background:var(--panel);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:6px 12px;cursor:pointer;font:inherit;font-size:13px}
+  .ctxbtn.on{border-color:var(--acc);background:var(--panel2)}
+  .bar{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin-top:6px}
+  .bar>div{height:100%;background:var(--acc)}
+</style>
+</head>
+<body class="int">
+<header>
+  <h1>simple-hook-reels · pipeline de punta a punta</h1>
+  <span class="small">Basado en <code>SKILL.md</code>, <code>references/*</code>, <code>herramientas/*</code> y un proyecto real (vuelo supersónico)</span>
+  <div class="sp"></div>
+  <span class="small">Modo:</span>
+  <div class="seg" id="modo">
+    <button data-m="int" class="on">Interactivo</button>
+    <button data-m="auto">Automatizado</button>
+  </div>
+</header>
+<nav class="tabs" id="tabs"></nav>
+
+<main id="t-pipeline" class="on">
+  <div class="flow" id="resumen"></div>
+  <div class="layout">
+    <div class="steps" id="steps"></div>
+    <div class="card" id="detalle"></div>
+  </div>
+</main>
+
+<main id="t-contexto">
+  <div class="card">
+    <h2>Qué contexto carga cada agente, y cuándo</h2>
+    <p class="small">Pulsa una etapa para ver qué entra en la ventana de contexto del agente en ese momento. La regla de la skill: «lee cada <code>references/</code> una vez por vídeo, cuando su etapa lo diga».</p>
+    <div class="ctxrow" id="ctxbtns"></div>
+    <div id="ctxout" style="margin-top:14px"></div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h2>Siempre cargado (al abrir la carpeta)</h2>
+    <table>
+      <tr><th>Archivo</th><th>Quién lo lee</th><th>Para qué</th></tr>
+      <tr><td><code>CLAUDE.md</code></td><td>Claude Code</td><td>Solo contiene <code>@AGENTS.md</code>: importa el contenido.</td></tr>
+      <tr><td><code>AGENTS.md</code></td><td>Claude Code (vía import) y Codex (nativo)</td><td>Reglas de la carpeta: modos, revisores, zona segura, claves, «nunca publiques».</td></tr>
+      <tr><td><code>.claude/skills/video/SKILL.md</code></td><td>Claude Code</td><td>Las 11 etapas y las reglas de la casa. Se carga cuando la petición es de vídeo.</td></tr>
+      <tr><td><code>.agents/skills/video/</code></td><td>Codex</td><td>Copia de la misma skill para Codex.</td></tr>
+      <tr><td><code>.codex/config.toml</code></td><td>Codex</td><td><code>model_auto_compact_token_limit = 150000</code>: resume la conversación antes de que sea enorme.</td></tr>
+      <tr><td><code>trabajo/preferencias.md</code>, <code>trabajo/estilo/estilo.md</code>, <code>trabajo/maquina.md</code></td><td>Ambos</td><td>Gustos del creador con sus palabras, aspecto fijo y trucos de esta máquina (Windows, ffmpeg, GPU).</td></tr>
+    </table>
+    <div class="lim"><b>Por qué importa:</b> el contexto no se guarda entre conversaciones. Todo lo que el siguiente vídeo debe saber tiene que estar en archivos (<code>guion.json</code>, <code>plan.md</code>, <code>notas.md</code>, <code>investigacion.md</code>, <code>preferencias.md</code>). Por eso la skill dice «el siguiente vídeo, en una conversación nueva».</div>
+  </div>
+</main>
+
+<main id="t-tecnologia">
+  <div class="grid2">
+    <div class="card">
+      <h2>Cómo se generan las imágenes</h2>
+      <div class="ok"><b>No hay un modelo de imagen o vídeo generativo.</b> Cada escena es código que escribe el agente: HTML + CSS + SVG animado con GSAP, o three.js con modelos <code>.glb</code> para 3D.</div>
+      <div class="flow">
+        <span>Agente escribe <code>escenas/x.html</code></span><i>→</i>
+        <span><code>montar.mjs</code> inyecta tiempos de voz</span><i>→</i>
+        <span>HyperFrames <code>@0.8.167</code></span><i>→</i>
+        <span>Chrome sin pantalla captura fotogramas</span><i>→</i>
+        <span>ffmpeg codifica</span><i>→</i>
+        <span><code>.mp4</code></span>
+      </div>
+      <h3>Piezas</h3>
+      <ul>
+        <li><b>Escena 2D:</b> <code>plantilla/escena.html</code> + <code>kit.js</code> (<code>K.entrar</code>, <code>K.zoomA</code>, <code>K.encuadre</code>, <code>K.kf</code>…). Línea de tiempo GSAP en pausa; el render la recorre fotograma a fotograma, por eso sale idéntico cada vez.</li>
+        <li><b>Escena 3D:</b> <code>escena-3d.html</code> + <code>kit3d.js</code> (three.js: <code>estudio</code>, <code>cargar</code>, <code>camino</code>, <code>seguir</code>, materiales, <code>chorro</code>).</li>
+        <li><b>Aspecto:</b> <code>estilo.css</code> con variables (<code>--fondo</code>, <code>--marca</code>, <code>--agua</code>…). Fuentes Figtree y JetBrains Mono.</li>
+        <li><b>Tiempos:</b> <code>C["palabra"]</code> = segundo exacto de cada palabra de la voz; nada se anima con segundos escritos a mano.</li>
+        <li><b>Subtítulos:</b> los genera <code>montar.mjs</code> a partir de los tiempos de palabra.</li>
+        <li><b>Modelos 3D:</b> se descargan libres a <code>recursos/</code> (Khronos, Poly Haven, Kenney, Quaternius, Sketchfab CC0/CC-BY) antes de montar. Si no hay uno bueno, la regla es dibujarlo en 2D, no modelarlo con formas simples.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>Otras tecnologías del pipeline</h2>
+      <table>
+        <tr><th>Qué</th><th>Con qué</th></tr>
+        <tr><td>Voz</td><td>ElevenLabs (<code>eleven_v4</code>, tiempos por letra) si hay clave; si no, Kokoro local. Tu voz: <code>voz-propia.mjs</code> (transcribe y alinea con el guion).</td></tr>
+        <tr><td>Tiempos por palabra (Kokoro / voz propia)</td><td><code>hyperframes transcribe</code> (modelo parakeet local)</td></tr>
+        <tr><td>Efectos de sonido (opcionales)</td><td>ElevenLabs genera; <code>earshot</code> comprueba que suenen a lo descrito; máx. 4</td></tr>
+        <tr><td>Referencia</td><td><code>yt-dlp</code> baja el reel; ffmpeg mide cortes, movimiento y ocupación; saca hojas JPG</td></tr>
+        <tr><td>Revisión visual</td><td>Hojas JPG (<code>frases</code>, <code>comparacion</code>, <code>hoja</code>, <code>cortes</code>, <code>tirones</code>) que el agente mira con visión</td></tr>
+        <tr><td>Render</td><td>CPU primero; si falla y hay NVIDIA, reintenta con <code>--gpu --browser-gpu</code></td></tr>
+        <tr><td>Claves</td><td><code>.env.local</code> en la raíz, vía <code>clave.mjs</code>; nunca por el chat</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h2>Dónde entran Claude Code y Codex</h2>
+    <table>
+      <tr><th></th><th>Claude Code</th><th>Codex</th></tr>
+      <tr><td>Instrucciones</td><td><code>CLAUDE.md</code> → <code>@AGENTS.md</code></td><td><code>AGENTS.md</code> directo</td></tr>
+      <tr><td>Skill</td><td><code>.claude/skills/video/</code></td><td><code>.agents/skills/video/</code> (misma skill)</td></tr>
+      <tr><td>Revisores (4)</td><td><code>.claude/agents/*.md</code> como subagentes de solo lectura/búsqueda</td><td>No hay definiciones en <code>.codex/</code> en este repo. Según AGENTS.md, si el agente no se puede lanzar, el principal hace la revisión una vez y lo anota.</td></tr>
+      <tr><td>Ajustes</td><td><code>.mcp.json</code> (Perplexity)</td><td><code>.codex/config.toml</code> (compactación a 150k tokens)</td></tr>
+      <tr><td>Lo que hace igual</td><td colspan="2">Escribe guion, plan y escenas; lanza las herramientas <code>node herramientas/*.mjs</code>; mira las hojas; corrige.</td></tr>
+    </table>
+    <p class="small">Las herramientas son scripts deterministas. El juicio (qué decir, qué dibujar, si se ve bien) siempre lo pone el agente, y en las cuatro revisiones, un segundo agente con otra perspectiva.</p>
+  </div>
+</main>
+
+<main id="t-limites">
+  <div class="card">
+    <h2>Limitaciones actuales, sin adornos</h2>
+    <div class="lim"><b>Calidad visual limitada por «dibujar con código».</b> Formas orgánicas, metal con reflejos creíbles, fluidos y partículas con aspecto fotorrealista son difíciles en SVG/CSS. En 3D depende de que exista un <code>.glb</code> libre bueno; si no, vuelve a 2D.</div>
+    <div class="lim"><b>El agente juzga el movimiento con imágenes fijas.</b> Revisa hojas de fotogramas, no ve el vídeo en continuo. El tirón, el ritmo y la sensación de «se ve caro» se miden con <code>medir.mjs</code> (aviso, no nota) y el creador es el último filtro.</div>
+    <div class="lim"><b>Dependencia de una referencia.</b> «Nunca se inventa el aspecto»: cada vídeo copia la forma de otro. Si ningún vídeo de <code>estanteria/</code> encaja con un tema aeroespacial/matemático, la calidad cae. La estantería actual (tactil, teclado, metro, virologa, paloma, cachalote, andes, bombas, humanidad) no es del nicho.</div>
+    <div class="lim"><b>Vídeos más largos de lo medido.</b> Las referencias de la estantería duran entre 31 y 125 s. Tu objetivo de 1:30–2:30 está dentro, pero el render, la revisión por hojas y el guion se han ajustado con esos tiempos.</div>
+    <div class="lim"><b>Tiempo y máquina.</b> RTX 3060 Laptop de 6 GB. Prueba anotada: un vídeo de GPS a 60 fps tardó 223 s en CPU (28 MB) y 523 s con GPU (71 MB, con errores de captura). En Windows, ffmpeg no está en el PATH del agente y las herramientas piden permiso fuera del sandbox.</div>
+    <div class="lim"><b>Voz.</b> ElevenLabs necesita clave de pago. Kokoro (gratis) suena peor. Tu voz propia exige grabar el guion cerrado.</div>
+    <div class="lim"><b>Sonido.</b> Por defecto ninguno; máximo 4 efectos y solo de cosas físicas visibles. No hay música ni ambiente.</div>
+    <div class="lim"><b>Un solo formato.</b> 1080×1920 vertical con zona segura de Instagram. No hay versión horizontal ni salida específica para YouTube Shorts (la zona segura de Shorts es distinta).</div>
+    <div class="lim"><b>Control de versiones.</b> <code>.gitignore</code> incluye <code>trabajo/*</code>: comprueba qué de <code>trabajo/</code> está realmente bajo git antes de confiar en que está respaldado.</div>
+    <div class="lim"><b>Contexto largo.</b> Un vídeo completo con 4 revisores consume mucho contexto; por eso hay archivos de estado y compactación en Codex.</div>
+    <div class="lim"><b>Veracidad.</b> Dos revisores buscan en la web, pero siguen siendo agentes de IA: las cifras clave de ingeniería conviene que las veas tú, sobre todo en un canal de nivel técnico.</div>
+  </div>
+</main>
+
+<main id="t-mejoras">
+  <div class="card">
+    <h2>Propuestas para subir el nivel (para iterar contigo)</h2>
+    <p class="small">Esto no existe aún: son ideas ordenadas por impacto/coste.</p>
+    <div class="prop"><b>1. Blender como productor de recursos 3D.</b> Hay un MCP de Blender disponible en esta sesión. Etapa nueva entre «Plan» y «Voz»: el agente modela/importa la pieza (álabe, compresor, satélite, cono de Mach) en Blender, la exporta a <code>.glb</code> con materiales PBR y la carga con <code>cargar()</code> de <code>kit3d.js</code>. Encaja con la regla actual de «3D con un modelo bueno» y desbloquea los acercamientos que pide tu estilo (turbina, cámara de combustión). Límite: si el <code>.glb</code> es pesado, el render se alarga en la GPU de 6 GB.</div>
+    <div class="prop"><b>2. Blender como renderizador de planos cinematográficos.</b> Para planos que three.js no logra (fluidos, humo, metal con reflejos), renderizar clips cortos o secuencias PNG con Cycles/Eevee y meterlos como <code>&lt;video&gt;</code> dentro de la escena, sincronizados por <code>C["palabra"]</code>. Más calidad, pero cada cambio de guion obliga a re-renderizar.</div>
+    <div class="prop"><b>3. Estantería propia del canal.</b> Cuando tengas 3–4 vídeos aprobados (GPS, onda de choque, 5 dimensiones…), añadirlos a <code>estanteria/</code> como referencias del nicho, para que los siguientes copien la forma de tu canal y no de reels de otros temas.</div>
+    <div class="prop"><b>4. Plantillas de visualización matemática.</b> Un kit <code>kit-mates.js</code> (ejes, vectores, matrices que transforman una cuadrícula, ondas, constelaciones en órbita) para que álgebra y comunicaciones salgan con el mismo lenguaje visual cada vez.</div>
+    <div class="prop"><b>5. Salida para YouTube Shorts.</b> Segunda zona segura y portada específica, además de la de Instagram.</div>
+    <div class="prop"><b>6. Revisor de rigor técnico.</b> Un quinto revisor con perfil ingeniero aeroespacial para el público técnico, además del revisor-lenguaje (público general): es tu premisa de que ambos lo entiendan.</div>
+  </div>
+</main>
+
+<script>
+const ACTORES = {
+  script: ['script', 'Script (determinista)'],
+  llm: ['llm', 'Agente (Claude Code / Codex)'],
+  rev: ['rev', 'Subagente revisor'],
+  user: ['user', 'Tú'],
+  ext: ['ext', 'Servicio externo']
+};
+const ETAPAS = [
+  { n: 0, t: 'Entrada', s: 'Tu petición', actores: ['user','llm'],
+    entra: 'Una frase tuya («Hazme un vídeo sobre cómo funciona un turbofán»), o un reel que quieres copiar, o un guion propio. Opcional: modo automatizado o interactivo (por defecto interactivo).',
+    que: 'El agente detecta que es una petición de vídeo y carga la skill <code>video</code>. Lee entera <code>SKILL.md</code> una vez. Si es la primera vez («configúrame»): <code>doctor.mjs</code>, instalar lo que falte, <code>clave.mjs</code> para la clave de voz, y una pregunta de preferencias que se guarda en <code>trabajo/preferencias.md</code>.',
+    herr: ['node herramientas/doctor.mjs', 'node herramientas/clave.mjs'],
+    lee: ['CLAUDE.md → AGENTS.md', 'SKILL.md', 'trabajo/preferencias.md', 'trabajo/estilo/estilo.md', 'trabajo/maquina.md'],
+    sale: ['.env.local (clave ElevenLabs)', 'trabajo/preferencias.md'],
+    tec: 'Node, ffmpeg, Python (se instalan con winget/pip), página local para pegar la clave.',
+    lim: 'En Windows el PATH de ffmpeg no llega a la terminal del agente (ver <code>maquina.md</code>). Si no hay clave, voz Kokoro, peor.',
+    stop: null },
+  { n: 1, t: 'Proyecto', s: 'Carpeta del vídeo', actores: ['script'],
+    entra: 'El tema.', que: 'Crea la carpeta del vídeo con lo mínimo.',
+    herr: ['node herramientas/nuevo.mjs "<tema>"'],
+    lee: ['plantilla/escena.html', 'trabajo/estilo.css'],
+    sale: ['trabajo/proyectos/<fecha>-<slug>/ con guion.json vacío, escenas/_plantilla*.html, estilo.css, notas.md'],
+    tec: 'Node (fs).', lim: 'Los vídeos son independientes: nunca se abre otro proyecto de <code>trabajo/proyectos/</code>.', stop: null },
+  { n: 2, t: 'Investigación', s: 'Datos con fuente', actores: ['llm','ext'],
+    entra: 'El tema y el nicho.',
+    que: 'El agente busca en la web cada dato, con su fuente y la frase exacta, comprobado el día de hoy. No se vuelve a buscar lo ya encontrado.',
+    herr: ['Búsqueda web del agente (y Perplexity vía .mcp.json si está activo)'],
+    lee: ['—'], sale: ['investigacion.md'],
+    tec: 'WebSearch / WebFetch del agente; MCP de Perplexity.',
+    lim: 'Es la base de la veracidad; la verificación seria llega en la etapa 4. Poca investigacion veo en los archivos generados', stop: null },
+  { n: 3, t: 'Referencia', s: 'Copiar la forma de un reel que funcionó', actores: ['script','llm'],
+    entra: 'Un enlace o archivo tuyo, o un nombre de <code>estanteria/</code>.',
+    que: 'Se mide el reel (cortes, frases con su segundo, movimiento, ocupación) y se sacan hojas de fotogramas. El agente las mira y escribe <code>referencia.md</code>: una fila por plano (qué llena la pantalla, qué se mueve, dónde va el texto, qué se dice). Es «la vara» con la que se compara todo después.',
+    herr: ['node herramientas/referencia.mjs <enlace|archivo> --proyecto <p>', 'node herramientas/referencia.mjs --estanteria <nombre> --proyecto <p>'],
+    lee: ['references/referencia.md', 'estanteria/LEEME.md', 'estanteria/<nombre>/referencia.md'],
+    sale: ['referencia/reel.mp4', 'referencia.json', 'hoja-hook.jpg', 'hoja.jpg', 'referencia.md'],
+    tec: 'yt-dlp (bajar), ffmpeg (medir), visión del agente (leer las hojas).',
+    lim: 'Las 9 referencias de la estantería no son de ingeniería aeroespacial. Aquí es donde más ganarías con referencias de tu nicho.', stop: null },
+  { n: 4, t: 'Guion', s: 'Hook + cuerpo, verificado', actores: ['llm','script','rev'],
+    entra: 'Investigación + referencia + preferencias (idioma, público, cierre «A seguir aprendiendo»).',
+    que: 'El agente escribe <code>guion.json</code> (hook principal + hooks de reserva + cuerpo frase a frase, con la palabra clave de cada una y la escena donde va) y <code>pie.txt</code> (el texto del post). <code>guion.mjs</code> comprueba reglas del hook (que no empiece por fecha, saludo, «según»…). Después, dos revisores en secuencia, una sola ronda cada uno: <b>revisor-veracidad-guion</b> (busca cada dato, cifra y causa y lo pasa a lenguaje simple) y <b>revisor-lenguaje</b> (lectora de 45 años, madre de dos hijos: ¿se imagina y entiende?).',
+    herr: ['node herramientas/guion.mjs <p>'],
+    lee: ['references/viral.md (siempre)', 'references/guion.md', 'investigacion.md', 'referencia.md', '.claude/agents/revisor-veracidad-guion.md', '.claude/agents/revisor-lenguaje.md'],
+    sale: ['guion.json', 'pie.txt', 'investigacion.md (con fuentes)', 'notas.md (qué cambió y por qué)'],
+    tec: 'LLM + 2 subagentes con búsqueda web. Un hook pasa cinco pruebas: lo raro primero, de algo suyo, deja pregunta, se entiende a la primera, para sin sonido.',
+    lim: 'Que el hook pare lo juzga el agente, no un script. El revisor-lenguaje representa un público general; no un ingeniero (ver Mejoras, propuesta 6).',
+    stop: 'int: apruebas el guion y dices si quieres efectos de sonido' },
+  { n: 5, t: 'Plan', s: 'Frase a frase, qué se ve', actores: ['llm'],
+    entra: 'Guion aprobado + referencia plano a plano.',
+    que: '<code>plan.md</code>: arriba, la decisión global (qué referencia, la cosa que vuelve siempre, el color de lo invisible, cada movimiento de cámara con su palabra, cuál es el hook, cuál el pasaje más difícil). Debajo, una fila por frase: la frase, qué hace la referencia en ese momento, <b>lo nuestro</b> en el mismo encuadre, cuándo cambia, qué deja a la siguiente y qué recursos (modelos 3D, fotos) hacen falta con su licencia. Aquí se registran los acercamientos que explican una pieza.',
+    herr: ['(sin herramienta: lo escribe el agente)'],
+    lee: ['references/escenas.md', 'trabajo/estilo/estilo.md (alternar conjunto y detalle)'],
+    sale: ['plan.md', 'recursos/ (modelos descargados)', 'recursos/mundo.js (la cosa real, una vez, a escala)'],
+    tec: 'LLM. Los modelos 3D se descargan aquí, no durante el render.',
+    lim: 'Un plan flojo se paga caro más adelante. Si no hay modelo 3D bueno, se dibuja en 2D.', stop: null },
+  { n: 6, t: 'Voz', s: 'Audio con el segundo de cada palabra', actores: ['script','ext'],
+    entra: '<code>guion.json</code>.',
+    que: 'Genera la voz del hook y el cuerpo en una toma, con los tiempos de cada palabra. Cada frase se guarda en caché: cambiar una no rehace las demás. Los silencios largos se acortan. Si prefieres tu voz, <code>voz-propia.mjs</code> transcribe tu grabación y la alinea al guion con el mismo formato.',
+    herr: ['node herramientas/voz.mjs <p> [--kokoro] [--rehacer]', 'node herramientas/voz-propia.mjs <p> <grabacion>'],
+    lee: ['guion.json', '.env.local (ELEVENLABS_API_KEY)'],
+    sale: ['voz/h1.wav', 'voz/h1.json (duración, frases, palabras con inicio/fin)'],
+    tec: 'ElevenLabs (<code>eleven_v4</code>) o Kokoro local + parakeet para los tiempos.',
+    lim: 'Tu preferencia es tu voz real: las versiones previas usan Kokoro/ElevenLabs hasta cerrar el vídeo.', stop: null },
+  { n: 7, t: 'Hook + un pasaje', s: 'La primera prueba visual', actores: ['llm','script','rev'],
+    entra: 'Plan + voz con tiempos.',
+    que: 'El agente escribe solo las escenas del hook y del pasaje más difícil (<code>escenas/*.html</code>). <code>revisar.mjs --parcial</code> rehace voz si hizo falta, monta, pasa <code>hyperframes check</code>, saca un borrador, comprueba la zona segura y mide tirones. El agente mira las hojas al lado de la referencia. Luego, en secuencia y una sola vez cada uno: <b>revisor-hook</b> (espectador adulto técnico: ¿te detienes?, ¿aspecto infantil?) y <b>revisor-veracidad-imagen</b> (formas, proporciones, unidades y números en pantalla). Se aplica una ronda de ajustes.',
+    herr: ['node herramientas/revisar.mjs <p> --parcial', '(montar.mjs, medir.mjs, comparar.mjs se llaman solos)'],
+    lee: ['references/escenas.md', 'plan.md', 'referencia.md', '.claude/agents/revisor-hook.md', '.claude/agents/revisor-veracidad-imagen.md'],
+    sale: ['escenas/hook.html + pasaje', 'build/h1/avance.mp4', 'build/h1/{frases,comparacion,hoja,cortes,tirones}.jpg', 'notas.md'],
+    tec: 'HTML/SVG/GSAP o three.js; HyperFrames check; ffmpeg; visión del agente sobre las hojas.',
+    lim: 'Se comprueban fotogramas fijos, no el movimiento en continuo. Imagen y rigor físico son dos revisores aparte.',
+    stop: 'int: te enseña <code>avance.mp4</code> para aprobar el hook' },
+  { n: 8, t: 'El resto', s: 'Todas las escenas', actores: ['llm'],
+    entra: 'Hook aprobado (o continuar en automático).',
+    que: 'El agente escribe todas las escenas restantes igual de fieles a la referencia, varias por mensaje y arreglando con ediciones pequeñas, no reescribiendo.',
+    herr: ['(escribe escenas/*.html con el kit K / kit3d)'],
+    lee: ['references/escenas.md (kit de movimiento)', 'recursos/mundo.js'],
+    sale: ['escenas/*.html'], tec: 'LLM + <code>kit.js</code>/<code>kit3d.js</code>.',
+    lim: 'Mantener la misma escala y objeto entre escenas depende de <code>mundo.js</code>.', stop: null },
+  { n: 9, t: 'Sonido', s: 'Opcional, por defecto no', actores: ['llm','script','ext'],
+    entra: 'Solo si dijiste que sí (en automático: no).',
+    que: 'Como mucho cuatro efectos, cada uno de algo físico que se ve. Se describen en <code>sonidos.json</code>; si hay uno aprobado en <code>sonidos/</code> se usa; si no, ElevenLabs lo genera y earshot elige la versión que más suena a lo descrito.',
+    herr: ['node herramientas/sonido.mjs <p>'],
+    lee: ['sonidos/LEEME.md', 'plan.md'], sale: ['sonidos.json', 'sonidos/<nombre>.mp3', 'sonidos/h1.json'],
+    tec: 'ElevenLabs sound generation, earshot.', lim: 'Sin música ni ambiente por diseño.', stop: null },
+  { n: 10, t: 'Revisión', s: 'Tres pasadas', actores: ['llm','script'],
+    entra: 'Todas las escenas.',
+    que: '<code>revisar.mjs</code> completo, mínimo tres pasadas hasta que una pasada entera no encuentre nada. Mira <code>frases.jpg</code> + <code>comparacion.jpg</code> (la que manda), <code>hoja.jpg</code>, <code>cortes.jpg</code>, <code>tirones.jpg</code>. Lo rojo es lo que tapa Instagram. Cada arreglo se anota en una línea en <code>notas.md</code>.',
+    herr: ['node herramientas/revisar.mjs <p> [--escenas a,b] [--en 0,0.5,1]'],
+    lee: ['hojas de build/h1/', 'referencia.md'], sale: ['borrador.mp4', 'hojas', 'notas.md'],
+    tec: 'ffmpeg, HyperFrames check, medición de tirones/cortes.', lim: 'Las medidas son para comparar, nunca para aprobar. Tarda unos minutos por pasada.', stop: null },
+  { n: 11, t: 'Entrega', s: 'El vídeo final', actores: ['script','user'],
+    entra: 'Revisión limpia.',
+    que: 'Monta, pasa el check, renderiza a calidad final y comprueba que dura lo que la voz y no está vacío. Deja el vídeo, la portada y <code>caption.txt</code>. Te dice la ruta. Nada se publica solo: la subida es cosa tuya.',
+    herr: ['node herramientas/entregar.mjs <p>'],
+    lee: ['pie.txt', 'build/h1/'], sale: ['trabajo/salida/<proyecto>/<slug>-h1.mp4', 'portada-h1.jpg', 'caption.txt'],
+    tec: 'HyperFrames render (CPU, o GPU si falla) + ffmpeg.', lim: 'Si quieres otra versión con un hook de reserva, lo pides y se rehace solo la apertura.', stop: null }
+];
+
+const CTX = {
+  0: ['AGENTS.md', 'SKILL.md', 'preferencias.md', 'estilo.md', 'maquina.md'],
+  1: ['(lo anterior)'],
+  2: ['SKILL.md', 'investigacion.md'],
+  3: ['references/referencia.md', 'estanteria/LEEME.md', 'referencia.md (de la estantería o nueva)'],
+  4: ['references/viral.md', 'references/guion.md', 'investigacion.md', 'referencia.md', 'Revisores: veracidad-guion y lenguaje (cada uno con su propio contexto limpio)'],
+  5: ['references/escenas.md', 'guion.json', 'referencia.md', 'estilo.md'],
+  6: ['guion.json (las herramientas no cargan código en contexto: «no leas su código»)'],
+  7: ['references/escenas.md', 'plan.md', 'hojas JPG', 'referencia.md', 'Revisores: hook y veracidad-imagen (contexto propio)'],
+  8: ['references/escenas.md', 'plan.md', 'recursos/mundo.js'],
+  9: ['sonidos/LEEME.md', 'plan.md'],
+  10: ['hojas JPG', 'notas.md', 'referencia.md'],
+  11: ['pie.txt', 'resumen de la entrega']
+};
+
+let modo = 'int', sel = 0;
+const $ = (s) => document.querySelector(s);
+
+function tabs() {
+  const ts = [['pipeline','Pipeline'],['contexto','Contextos'],['tecnologia','Tecnología y agentes'],['limites','Limitaciones'],['mejoras','Mejoras (Blender…)']];
+  $('#tabs').innerHTML = ts.map(([k,l],i)=>`<button data-k="${k}" class="${i?'':'on'}">${l}</button>`).join('');
+  $('#tabs').onclick = (e)=>{ const k = e.target.dataset.k; if(!k) return;
+    document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on', b===e.target));
+    document.querySelectorAll('main').forEach(m=>m.classList.toggle('on', m.id==='t-'+k)); };
+}
+function resumen() {
+  $('#resumen').innerHTML = ETAPAS.map(e=>`<span>${e.n}. ${e.t}</span>`).join('<i>→</i>');
+}
+function steps() {
+  $('#steps').innerHTML = ETAPAS.map(e=>{
+    const parada = e.stop && modo==='int' ? '<span class="stop">⏸ tú</span>' : (e.stop && modo==='auto' ? '<span class="stop" style="color:var(--mut)">sigue solo</span>' : '');
+    return `<div class="step ${e.n===sel?'on':''}" data-n="${e.n}"><div class="n">${e.n}</div><div><div class="t">${e.t}</div><div class="s">${e.s}</div></div>${parada}</div>`;
+  }).join('');
+}
+function lista(a){ return '<ul>'+a.map(x=>`<li>${x.includes('<')?x:'<code>'+x+'</code>'}</li>`).join('')+'</ul>'; }
+function detalle() {
+  const e = ETAPAS[sel];
+  const act = e.actores.map(a=>`<span class="tag ${ACTORES[a][0]}">${ACTORES[a][1]}</span>`).join('');
+  let parada = '';
+  if (e.stop) parada = modo==='int'
+    ? `<div class="prop"><b>Parada de aprobación:</b> ${e.stop.replace(/^int: /,'')}. No se sigue hasta que digas que sí.</div>`
+    : `<div class="ok"><b>Modo automatizado:</b> no espera aprobación; decide con tus preferencias y continúa (sin efectos de sonido salvo que los pidas).</div>`;
+  $('#detalle').innerHTML = `
+    <h2>${e.n}. ${e.t}</h2><div>${act}</div>
+    ${parada}
+    <h3>Qué entra</h3><p>${e.entra}</p>
+    <h3>Qué ocurre</h3><p>${e.que}</p>
+    <div class="grid2">
+      <div><h3>Herramientas</h3>${lista(e.herr)}<h3>Lee</h3>${lista(e.lee)}</div>
+      <div><h3>Produce</h3>${lista(e.sale)}<h3>Tecnología</h3><p>${e.tec}</p></div>
+    </div>
+    <div class="lim"><b>Límite aquí:</b> ${e.lim}</div>`;
+}
+function ctx() {
+  $('#ctxbtns').innerHTML = ETAPAS.map(e=>`<button class="ctxbtn" data-n="${e.n}">${e.n}. ${e.t}</button>`).join('');
+  const show = (n)=>{ document.querySelectorAll('.ctxbtn').forEach(b=>b.classList.toggle('on', +b.dataset.n===n));
+    const c = CTX[n]; $('#ctxout').innerHTML = '<h3 style="margin:0 0 6px;font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.08em">Entra en contexto</h3>'+lista(c)+'<div class="bar"><div style="width:'+Math.min(100,10+c.length*14)+'%"></div></div><p class="small">La barra es solo orientativa (nº de documentos), no tokens medidos.</p>'; };
+  $('#ctxbtns').onclick = (e)=>{ if(e.target.dataset.n!==undefined) show(+e.target.dataset.n); };
+  show(0);
+}
+$('#steps').onclick = (e)=>{ const s = e.target.closest('.step'); if(!s) return; sel = +s.dataset.n; steps(); detalle(); };
+$('#modo').onclick = (e)=>{ const m = e.target.dataset.m; if(!m) return; modo = m;
+  document.body.className = m; document.querySelectorAll('#modo button').forEach(b=>b.classList.toggle('on', b.dataset.m===m)); steps(); detalle(); };
+tabs(); resumen(); steps(); detalle(); ctx();
+</script>
+<p class="note" style="max-width:1400px;margin:0 auto;padding:0 24px 24px">Generado a partir del código del repo el 2026-11-01. Cuando cambien <code>SKILL.md</code> o <code>herramientas/</code>, hay que regenerarlo.</p>
+</body>
+</html>
